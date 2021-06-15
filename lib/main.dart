@@ -34,8 +34,9 @@ class _HomeState extends State<Home> {
 
   void _handleResult(Object result) {
     setState(() {
-      _bytesData = Base64Decoder().convert(result.toString().split(",").last);
-      _selectedFile = _bytesData;
+      // _bytesData = Base64Decoder().convert(result.toString().split(",").last);
+      // _selectedFile = _bytesData;
+      _selectedFile = result.toString().split(",").last as List<int>;
     });
   }
 
