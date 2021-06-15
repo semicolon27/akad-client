@@ -3,6 +3,7 @@ import 'dart:html' as html;
 import 'dart:typed_data';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
 
 void main() => 
@@ -71,6 +72,8 @@ class _MyHomeState extends State<MyHome> {
     });
   }
 
+// final TextInputType keyboardType;
+
 @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,19 +85,27 @@ class _MyHomeState extends State<MyHome> {
           autovalidateMode: AutovalidateMode.always,
           key: _formKey,
           child: ListView(
-            padding: EdgeInsets.all(16.0),
-            children: [
+            padding: EdgeInsets.all(25.0),
+            children: <Widget>[
+              TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                 FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: InputDecoration(
+                  hintText: "Masukkan Nomor Registrasi",
+                  labelText: "No. Registrasi ",
+                  icon: Icon(Icons.no_accounts),
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.all(20.0),
+                ),
+              ),
               TextField(
                 decoration: InputDecoration(
-                  labelText: "No. Registrasi : ",
-              )),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Jenis Dokumen : "
-              )),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "File : "
+                  hintText: "Pilih Jenis Dokumen",
+                  labelText: "Jenis Dokumen ",
+                  icon: Icon(Icons.book),
+                  border: OutlineInputBorder()
               )),
               DropdownButton<String>(
                   value: _jenisDokumen,
