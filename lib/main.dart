@@ -1,24 +1,24 @@
+import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
-import 'package:flutter/material.dart';
 
-void main() {
+void main() => 
   runApp(MaterialApp(
-    home: Home(),
+    home: MyHome(),
   ));
-}
 
-class Home extends StatefulWidget {
+// Kelas yang akan tampil : MyHome
+class MyHome extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _MyHomeState createState() => _MyHomeState();
 }
 
-class _HomeState extends State<Home> {
-  List<String> jenisDokumen = ["KTP", "SIM", "KK"];
+class _MyHomeState extends State<MyHome> {
+  //Deklarasi jenis dokumen
+  List<String> jenisDokumen = ["KTP", "SIM", "Kartu Keluarga"];
   String _jenisDokumen = "KTP";
 
   late List<int> _selectedFile;
@@ -71,22 +71,30 @@ class _HomeState extends State<Home> {
     });
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tester"),
-        backgroundColor: Colors.deepPurple[200],
+        title: Text("Form Data"),
+        backgroundColor: Colors.amber,
       ),
       body: Form(
           autovalidateMode: AutovalidateMode.always,
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            padding: EdgeInsets.all(16.0),
             children: [
               TextField(
-                  decoration: InputDecoration(
-                hintText: "No. Registrasi",
+                decoration: InputDecoration(
+                  labelText: "No. Registrasi : ",
+              )),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Jenis Dokumen : "
+              )),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "File : "
               )),
               DropdownButton<String>(
                   value: _jenisDokumen,
@@ -107,6 +115,10 @@ class _HomeState extends State<Home> {
                       child: Text(value),
                     );
                   }).toList()),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Upload Dokumen : "
+              )),
               MaterialButton(
                 color: Colors.deepPurple,
                 elevation: 8,
