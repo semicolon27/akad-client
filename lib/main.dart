@@ -1,24 +1,25 @@
+import 'package:flutter/material.dart';
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:flutter/material.dart';
 
-void main() {
+void main() => 
   runApp(MaterialApp(
-    home: Home(),
+    home: MyHome(),
   ));
-}
 
-class Home extends StatefulWidget {
+// Kelas yang akan tampil : MyHome
+class MyHome extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _MyHomeState createState() => _MyHomeState();
 }
 
-class _HomeState extends State<Home> {
-  List<String> jenisDokumen = ["KTP", "SIM", "KK"];
+class _MyHomeState extends State<MyHome> {
+  //Deklarasi jenis dokumen
+  List<String> jenisDokumen = ["KTP", "SIM", "Kartu Keluarga"];
   String _jenisDokumen = "KTP";
 
   late List<int> _selectedFile;
@@ -71,22 +72,40 @@ class _HomeState extends State<Home> {
     });
   }
 
-  @override
+// final TextInputType keyboardType;
+
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tester"),
-        backgroundColor: Colors.deepPurple[200],
+        title: Text("Form Data"),
+        backgroundColor: Colors.amber,
       ),
       body: Form(
           autovalidateMode: AutovalidateMode.always,
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: ListView(
+            padding: EdgeInsets.all(25.0),
+            children: <Widget>[
               TextField(
-                  decoration: InputDecoration(
-                hintText: "No. Registrasi",
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                 FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: InputDecoration(
+                  hintText: "Masukkan Nomor Registrasi",
+                  labelText: "No. Registrasi ",
+                  icon: Icon(Icons.no_accounts),
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.all(20.0),
+                ),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Pilih Jenis Dokumen",
+                  labelText: "Jenis Dokumen ",
+                  icon: Icon(Icons.book),
+                  border: OutlineInputBorder()
               )),
               DropdownButton<String>(
                   value: _jenisDokumen,
@@ -107,6 +126,10 @@ class _HomeState extends State<Home> {
                       child: Text(value),
                     );
                   }).toList()),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Upload Dokumen : "
+              )),
               MaterialButton(
                 color: Colors.deepPurple,
                 elevation: 8,
