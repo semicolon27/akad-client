@@ -37,13 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "KTP", "Kartu Keluarga", "SIM", 
   ];
 
-  startWebFilePicker() async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.multiple = true;
-    uploadInput.draggable = true;
-    uploadInput.click();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
