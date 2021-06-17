@@ -1,31 +1,71 @@
-import 'package:flutter/material.dart';
-import 'dart:html' as html;
-import 'dart:typed_data';
 import 'dart:async';
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
-import 'package:http_parser/http_parser.dart';
 
-void main() => 
-  runApp(MaterialApp(
-    home: MyHome(),
-  ));
+Future<Dokumen> createDokumen(int jenis, String noreg) async {
+  // print("createDokumen");
+  final msg = jsonEncode({"noreg": noreg, "jenis": jenis});
+  // print(msg);
+  final response = await http.post(
+    Uri.parse('http://127.0.0.1:8000/text'),
+    // Uri.parse('https://webhook.site/c502765b-dfce-405b-8bb3-b2c9c556ed43'),
+    headers: <String, String>{
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    body: msg,
+  );
 
-// Kelas yang akan tampil : MyHome
-class MyHome extends StatefulWidget {
-  @override
-  _MyHomeState createState() => _MyHomeState();
+  if (response.statusCode == 201) {
+    // print("status 201");
+    return Dokumen.fromJson(jsonDecode(response.body));
+  } else {
+    // print("gagal");
+    throw Exception('Gagal membuat dokumen');
+  }
 }
 
-class _MyHomeState extends State<MyHome> {
-  //Deklarasi jenis dokumen
-  List<String> jenisDokumen = ["KTP", "SIM", "Kartu Keluarga"];
+class Dokumen {
+  final int id;
+  final int jenis;
+  final String noreg;
+
+  Dokumen({required this.id, required this.jenis, required this.noreg});
+
+  factory Dokumen.fromJson(Map<String, dynamic> json) {
+    print("factory fromJson");
+    return Dokumen(
+        //bisa ganti key sesuai kebutuhan dengan
+        //dengan catatan yang diambil pada object adalah nama colom di DB
+        id: json['id'],
+        jenis: json['jenis'],
+        noreg: json['noreg']);
+  }
+}
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  final TextEditingController noreg = TextEditingController();
+  final TextEditingController jenis = TextEditingController();
+  Future<Dokumen>? _hasilDokumen;
+
+  List<String> jenisDokumen = ["KTP", "SIM", "KK"];
   String _jenisDokumen = "KTP";
-
-  late List<int> _selectedFile;
-  late Uint8List _bytesData;
-
-  GlobalKey _formKey = new GlobalKey();
+  late int indexDokumen;
 
   void pilihJenis(String value) {
     setState(() {
@@ -33,129 +73,98 @@ class _MyHomeState extends State<MyHome> {
     });
   }
 
-  void _handleResult(Object result) {
-    setState(() {
-      // _bytesData = Base64Decoder().convert(result.toString().split(",").last);
-      // _selectedFile = _bytesData;
-      _selectedFile = result.toString().split(",").last as List<int>;
-    });
-  }
-
-  Future makeRequest() async {
-    var url = Uri.parse("http://127.0.0.1:8000/");
-    var request = new http.MultipartRequest("POST", url);
-    request.files.add(await http.MultipartFile.fromBytes('file', _selectedFile,
-        contentType: new MediaType('application', 'octet-stream'),
-        filename: "file_up"));
-
-    request.send().then((response) {
-      print("test");
-      print(response.statusCode);
-      if (response.statusCode == 200) print("Uploaded!");
-    });
-  }
-
-  startWebFilePicker() async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.multiple = true;
-    uploadInput.draggable = true;
-    uploadInput.click();
-
-    uploadInput.onChange.listen((e) {
-      final files = uploadInput.files;
-      final file = files![0];
-      final reader = new html.FileReader();
-      reader.onLoadEnd.listen((e) {
-        _handleResult(reader);
-      });
-      reader.readAsDataUrl(file);
-    });
-  }
-
-// final TextInputType keyboardType;
-
-@override
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Form Data"),
-        backgroundColor: Colors.amber,
+    return MaterialApp(
+      title: 'Create Data Example',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: Form(
-          autovalidateMode: AutovalidateMode.always,
-          key: _formKey,
-          child: ListView(
-            padding: EdgeInsets.all(25.0),
-            children: <Widget>[
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                 FilteringTextInputFormatter.digitsOnly
-                ],
-                decoration: InputDecoration(
-                  hintText: "Masukkan Nomor Registrasi",
-                  labelText: "No. Registrasi ",
-                  icon: Icon(Icons.no_accounts),
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.all(20.0),
-                ),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Pilih Jenis Dokumen",
-                  labelText: "Jenis Dokumen ",
-                  icon: Icon(Icons.book),
-                  border: OutlineInputBorder()
-              )),
-              DropdownButton<String>(
-                  value: _jenisDokumen,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurple,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _jenisDokumen = newValue!;
-                    });
-                  },
-                  items: <String>['KTP', 'KK', 'SIM']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList()),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Upload Dokumen : "
-              )),
-              MaterialButton(
-                color: Colors.deepPurple,
-                elevation: 8,
-                highlightElevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                textColor: Colors.white,
-                child: Text('Choose File'),
-                onPressed: () {
-                  startWebFilePicker();
-                },
-              ),
-              Divider(
-                color: Colors.teal,
-              ),
-              MaterialButton(
-                color: Colors.purple,
-                elevation: 8.0,
-                textColor: Colors.white,
-                onPressed: () {
-                  makeRequest();
-                },
-                child: Text('Send file to server'),
-              ),
-            ],
-          )),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Create Data Example'),
+        ),
+        body: Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(8.0),
+          child: (_hasilDokumen == null) ? buildColumn() : buildFutureBuilder(),
+        ),
+      ),
+    );
+  }
+
+  Column buildColumn() {
+    print("buildColumn");
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          controller: noreg,
+          decoration: InputDecoration(hintText: 'Nomor registrasi'),
+        ),
+        DropdownButton<String>(
+          value: _jenisDokumen,
+          style: const TextStyle(color: Colors.deepPurple),
+          underline: Container(
+            height: 2,
+            color: Colors.deepPurple,
+          ),
+          onChanged: (String? newValue) {
+            setState(() {
+              _jenisDokumen = newValue!;
+              indexDokumen = jenisDokumen.indexOf(_jenisDokumen) + 1;
+            });
+            print(indexDokumen);
+          },
+          items: jenisDokumen.map((valueItem) {
+            return DropdownMenuItem(
+              value: valueItem,
+              child: Text(valueItem),
+            ); //DropdownMenuItem
+          }).toList(),
+        ),
+        // Container(
+        //   child: filePicker(),
+        // ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _hasilDokumen = createDokumen(indexDokumen, noreg.text);
+            });
+          },
+          child: Text('Create Data'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> filePicker() async {
+    // untuk dialog pilih file
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      // nama file sesuai dengan dari database
+      // var file = File("namafile.pdf");
+      // convert file hasil ngambil yg berbentuk bytes
+      // file.writeAsBytesSync(result.files.single.bytes);
+    } else {
+      // User canceled the picker
+    }
+  }
+
+  FutureBuilder<Dokumen> buildFutureBuilder() {
+    print("FutureBuilder");
+    return FutureBuilder<Dokumen>(
+      future: _hasilDokumen,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data!.noreg);
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        return CircularProgressIndicator();
+      },
     );
   }
 }
