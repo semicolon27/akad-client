@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
 
           // membuat route yang mirip dengan route di web menggunakan package get => https://github.com/jonataslaw/getx#breaking-changes-from-20
           // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
+          // WARNING : routenya jangan pakai slash kosong ('/') ya, ada bug di sidebarnya
           getPages: [
             GetPage(name: '/home', page: () => MyHomePage()),
             GetPage(name: '/login', page: () => LoginPage()),
