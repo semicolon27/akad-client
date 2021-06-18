@@ -29,13 +29,13 @@ class MyApp extends StatelessWidget {
           // membuat route yang mirip dengan route di web menggunakan package get => https://github.com/jonataslaw/getx#breaking-changes-from-20
           // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
           getPages: [
-            GetPage(name: '/', page: () => MyHomePage()),
+            GetPage(name: '/home', page: () => MyHomePage()),
             GetPage(name: '/login', page: () => LoginPage()),
           ],
 
           // route yang di load pertama kali
           // Nanti kalau login nya dah jadi, ganti jadi /login
-          initialRoute: '/',
+          initialRoute: '/home',
         );
       },
     );
