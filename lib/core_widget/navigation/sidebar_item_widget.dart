@@ -25,7 +25,10 @@ class SidebarItemW extends ViewModelWidget<SidebarVM> {
   Widget build(BuildContext context, SidebarVM vm) {
     SidebarItem sidebarItem = SidebarItem.fromJson(data ?? {});
 
-    String? iconAsset = sidebarItem.icon;
+    IconData? iconAsset = sidebarItem.icon;
+    IconData? iconActiveAsset = sidebarItem.iconActive;
+    String? svgAsset = sidebarItem.svg;
+    String? svgActiveAsset = sidebarItem.svgActive;
     String? title = sidebarItem.title;
     bool? isDropdown = (sidebarItem.children ?? []).length > 0;
     bool? isExtend = vm.isExtend(sidebarItem.route ?? '');
@@ -65,12 +68,23 @@ class SidebarItemW extends ViewModelWidget<SidebarVM> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (iconAsset != null && iconAsset != "")
-                    SvgPicture.asset(
-                      "assets/icon/sidebar/$iconAsset",
-                      height: setHeight(20),
-                      width: setWidth(20),
-                      color: Colors.white,
-                    ),
+                    isActive || isExtend
+                        ? Icon(iconActiveAsset, color: Colors.white)
+                        : Icon(iconAsset, color: Colors.white),
+                  if (svgAsset != null && svgAsset != "")
+                    isActive || isExtend
+                        ? SvgPicture.asset(
+                            "assets/icon/sidebar/$svgActiveAsset",
+                            height: setHeight(20),
+                            width: setWidth(20),
+                            color: Colors.white,
+                          )
+                        : SvgPicture.asset(
+                            "assets/icon/sidebar/$svgAsset",
+                            height: setHeight(20),
+                            width: setWidth(20),
+                            color: Colors.white,
+                          ),
                   Container(
                     padding: EdgeInsets.only(left: 15),
                     child: Text(
@@ -237,7 +251,6 @@ class SidebarItemTwoW extends ViewModelWidget<SidebarVM> {
   Widget build(BuildContext context, SidebarVM vm) {
     SidebarItem sidebarItem = SidebarItem.fromJson(data ?? {});
 
-    String iconAsset = sidebarItem.icon ?? '';
     String title = sidebarItem.title ?? '';
     String route = '$parentUrl${sidebarItem.route}';
     bool isDropdown = (sidebarItem.children ?? []).length > 0;
