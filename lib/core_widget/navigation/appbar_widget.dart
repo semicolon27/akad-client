@@ -39,25 +39,44 @@ SliverAppBar sliverAppBarW() {
                 vertical: 20.sp,
                 horizontal: 10.sp,
               ),
-              child: Consumer<LoginProvider>(builder: (context, data, _) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      data.nama ?? '',
-                      style: textStyle.textStyleSubtitle1.copyWith(
-                        fontFamily: "Nunito",
-                        fontWeight: FontWeight.w600,
-                      ),
+              // child: Consumer<LoginProvider>(
+              //   builder: (context, data, _) {
+              //     return Column(
+              //       crossAxisAlignment: CrossAxisAlignment.end,
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Text(
+              //           data.nama ?? '',
+              //           style: textStyle.textStyleSubtitle1.copyWith(
+              //             fontFamily: "Nunito",
+              //             fontWeight: FontWeight.w600,
+              //           ),
+              //         ),
+              //         Text(
+              //           data.kantor ?? '',
+              //           style: textStyle.textStyleCaption,
+              //         ),
+              //       ],
+              //     );
+              //   },
+              // ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Nikita Khrushchev',
+                    style: textStyle.textStyleSubtitle1.copyWith(
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.w600,
                     ),
-                    Text(
-                      data.kantor ?? '',
-                      style: textStyle.textStyleCaption,
-                    ),
-                  ],
-                );
-              }),
+                  ),
+                  Text(
+                    'PT Gelar Tikar Jaya Abadi',
+                    style: textStyle.textStyleCaption,
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 50,
@@ -65,7 +84,7 @@ SliverAppBar sliverAppBarW() {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
                 child: Image.network(
-                  "https://1721181113.rsc.cdn77.org/data/images/full/27708/ai-can-accurately-determine-personality-type-based-on-selfie-58-of-the-time.jpeg",
+                  "https://img.freepik.com/free-photo/half-profile-image-beautiful-young-woman-with-bob-hairdo-posing-gazing-with-eyes-full-reproach-suspicion-human-facial-expressions-emotions-reaction-feelings_343059-4660.jpg?size=626&ext=jpg",
                   fit: BoxFit.cover,
                 ),
               ),
