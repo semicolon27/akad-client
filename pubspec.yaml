@@ -53,6 +53,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  
+  assets:
+    - assets/img/login_background.png
+    - assets/img/remark.png
+    - assets/img/mitrasoft_white.png
+    - assets/icon/sidebar/
+    - assets/icon/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
