@@ -1,169 +1,43 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-Future<Dokumen> createDokumen(int jenis, String noreg) async {
-  // print("createDokumen");
-  final msg = jsonEncode({"noreg": noreg, "jenis": jenis});
-  // print(msg);
-  final response = await http.post(
-    Uri.parse('http://127.0.0.1:8000/text'),
-    // Uri.parse('https://webhook.site/c502765b-dfce-405b-8bb3-b2c9c556ed43'),
-    headers: <String, String>{
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    },
-    body: msg,
-  );
+// untuk bisa menggunakan widget dri luar, cuma perlu import filenya saja
+// dan pakai seperti biasa
+import 'package:akad/pages/HomePage.dart';
+import 'package:akad/pages/LoginPage.dart';
 
-  if (response.statusCode == 201) {
-    // print("status 201");
-    return Dokumen.fromJson(jsonDecode(response.body));
-  } else {
-    // print("gagal");
-    throw Exception('Gagal membuat dokumen');
-  }
-}
+void main() => runApp(MyApp());
 
-class Dokumen {
-  final int id;
-  final int jenis;
-  final String noreg;
-
-  Dokumen({required this.id, required this.jenis, required this.noreg});
-
-  factory Dokumen.fromJson(Map<String, dynamic> json) {
-    print("factory fromJson");
-    return Dokumen(
-        //bisa ganti key sesuai kebutuhan dengan
-        //dengan catatan yang diambil pada object adalah nama colom di DB
-        id: json['id'],
-        jenis: json['jenis'],
-        noreg: json['noreg']);
-  }
-}
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  MyApp({Key? key}) : super(key: key);
-
-  @override
-  _MyAppState createState() {
-    return _MyAppState();
-  }
-}
-
-class _MyAppState extends State<MyApp> {
-  final TextEditingController noreg = TextEditingController();
-  final TextEditingController jenis = TextEditingController();
-  Future<Dokumen>? _hasilDokumen;
-
-  List<String> jenisDokumen = ["KTP", "SIM", "KK"];
-  String _jenisDokumen = "KTP";
-  late int indexDokumen;
-
-  void pilihJenis(String value) {
-    setState(() {
-      _jenisDokumen = value;
-    });
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Create Data Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Create Data Example'),
-        ),
-        body: Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(8.0),
-          child: (_hasilDokumen == null) ? buildColumn() : buildFutureBuilder(),
-        ),
-      ),
-    );
-  }
-
-  Column buildColumn() {
-    print("buildColumn");
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TextField(
-          controller: noreg,
-          decoration: InputDecoration(hintText: 'Nomor registrasi'),
-        ),
-        DropdownButton<String>(
-          value: _jenisDokumen,
-          style: const TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurple,
+    //
+    // Tambah screenutil untuk responsive => https://pub.dev/packages/flutter_screenutil
+    return ScreenUtilInit(
+      designSize: Size(360, 690),
+      builder: () {
+        //
+        // integrasi flutter get => https://pub.dev/packages/get
+        // MaterialApp jadi GetMaterialApp
+        return GetMaterialApp(
+          title: 'Page Detail',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
           ),
-          onChanged: (String? newValue) {
-            setState(() {
-              _jenisDokumen = newValue!;
-              indexDokumen = jenisDokumen.indexOf(_jenisDokumen) + 1;
-            });
-            print(indexDokumen);
-          },
-          items: jenisDokumen.map((valueItem) {
-            return DropdownMenuItem(
-              value: valueItem,
-              child: Text(valueItem),
-            ); //DropdownMenuItem
-          }).toList(),
-        ),
-        // Container(
-        //   child: filePicker(),
-        // ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              _hasilDokumen = createDokumen(indexDokumen, noreg.text);
-            });
-          },
-          child: Text('Create Data'),
-        ),
-      ],
-    );
-  }
 
-  Future<void> filePicker() async {
-    // untuk dialog pilih file
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+          // membuat route yang mirip dengan route di web menggunakan package get => https://github.com/jonataslaw/getx#breaking-changes-from-20
+          // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
+          // WARNING : routenya jangan pakai slash kosong ('/') ya, ada bug di sidebarnya
+          getPages: [
+            GetPage(name: '/home', page: () => MyHomePage()),
+            GetPage(name: '/login', page: () => LoginPage()),
+          ],
 
-    if (result != null) {
-      // nama file sesuai dengan dari database
-      // var file = File("namafile.pdf");
-      // convert file hasil ngambil yg berbentuk bytes
-      // file.writeAsBytesSync(result.files.single.bytes);
-    } else {
-      // User canceled the picker
-    }
-  }
-
-  FutureBuilder<Dokumen> buildFutureBuilder() {
-    print("FutureBuilder");
-    return FutureBuilder<Dokumen>(
-      future: _hasilDokumen,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data!.noreg);
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-
-        return CircularProgressIndicator();
+          // route yang di load pertama kali
+          // Nanti kalau login nya dah jadi, ganti jadi /login
+          initialRoute: '/home',
+        );
       },
     );
   }
