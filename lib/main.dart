@@ -12,10 +12,12 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //
     // Tambah screenutil untuk responsive => https://pub.dev/packages/flutter_screenutil
     return ScreenUtilInit(
       designSize: Size(360, 690),
       builder: () {
+        //
         // integrasi flutter get => https://pub.dev/packages/get
         // MaterialApp jadi GetMaterialApp
         return GetMaterialApp(
@@ -28,9 +30,8 @@ class MyApp extends StatelessWidget {
           // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
           // WARNING : routenya jangan pakai slash kosong ('/') ya, ada bug di sidebarnya
           getPages: [
-            GetPage(name: '/login', page: () => LoginPage()),
             GetPage(name: '/home', page: () => MyHomePage()),
-
+            GetPage(name: '/login', page: () => LoginPage()),
           ],
 
           // route yang di load pertama kali
