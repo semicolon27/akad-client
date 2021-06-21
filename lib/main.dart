@@ -30,13 +30,13 @@ class MyApp extends StatelessWidget {
           // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
           // WARNING : routenya jangan pakai slash kosong ('/') ya, ada bug di sidebarnya
           getPages: [
-            GetPage(name: '/home', page: () => MyHomePage()),
+            GetPage(name: '/detail', page: () => DetailDokumen()),
             GetPage(name: '/login', page: () => LoginPage()),
           ],
 
           // route yang di load pertama kali
           // Nanti kalau login nya dah jadi, ganti jadi /login
-          initialRoute: '/login',
+          initialRoute: '/detail',
         );
       },
     );
