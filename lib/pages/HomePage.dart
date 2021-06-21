@@ -1,50 +1,32 @@
-import 'dart:convert';
-
-import 'package:file_picker/file_picker.dart';
+import 'package:akad/controller/c_detail.dart';
+import 'package:akad/view_model/vm_detail.dart';
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:akad/pages/template.dart';
+import 'package:stacked/stacked.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({
+class DetailDokumen extends StatefulWidget {
+  DetailDokumen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _DetailDokumenState createState() => _DetailDokumenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController noreg = TextEditingController();
-  late int indexDokumen;
-  var _jenisDokumen;
-  var fileBytes;
-  String fileName = "File belum dipilih";
-  GlobalKey _formKey = new GlobalKey();
-
-  void pilihJenis(String value) {
-    setState(() {
-      _jenisDokumen = value;
-    });
-  }
-
-  List jenisDokumen = [
-    "KTP",
-    "Kartu Keluarga",
-    "SIM",
-  ];
-
+class _DetailDokumenState extends State<DetailDokumen> {
   @override
   Widget build(BuildContext context) {
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
-        body: Column(
+          body: ViewModelBuilder<DetailVM>.reactive(
+        viewModelBuilder: () => DetailVM(),
+        builder: (context, model, child) => Column(
           children: [
             Form(
               autovalidateMode: AutovalidateMode.always,
-              key: _formKey,
+              key: model.formkey,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -62,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 50,
                             width: 300,
                             child: TextField(
-                              controller: noreg,
+                              controller: model.noreg,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: 'Masukan Inputan',
@@ -73,28 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.only(top: 50),
                         child: Row(children: [
                           ElevatedButton(
-                              onPressed: () async {
-                                var picked =
-                                    await FilePicker.platform.pickFiles(
-                                  type: FileType.custom,
-                                  allowedExtensions: [
-                                    'jpg',
-                                    'jpeg',
-                                    'png',
-                                    'pdf'
-                                  ],
-                                );
-                                if (picked != null) {
-                                  setState(() {
-                                    fileBytes = picked.files.first.bytes;
-                                    fileName = picked.files.first.name;
-                                  });
-                                  // jangan di print, banyak banget wkwkwk
-                                  // print(fileBytes);
-                                }
-                              },
+                              onPressed: () => model.pilihFile(),
                               child: Text("Upload file")),
-                          Text(fileName)
+                          Text(model.fileName)
                         ]),
                       ),
                     ],
@@ -126,19 +89,17 @@ class _MyHomePageState extends State<MyHomePage> {
                               icon: Icon(Icons.arrow_drop_down),
                               isExpanded: true,
                               underline: SizedBox(),
-                              value: _jenisDokumen,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  _jenisDokumen = newValue!;
-                                  indexDokumen =
-                                      jenisDokumen.indexOf(_jenisDokumen) + 1;
-                                });
-                                print(indexDokumen);
-                              },
-                              items: jenisDokumen.map((valueItem) {
+                              value: model.jenis,
+                              onChanged: (newValue) =>
+                                  model.pilihJenisDokumen(newValue),
+                              items: model.jenisDokumen.map((valueItem) {
                                 return DropdownMenuItem(
                                   value: valueItem,
-                                  child: Text(valueItem),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 16),
+                                    child: Text(valueItem),
+                                  ),
                                 );
                               }).toList(),
                             ),
@@ -147,12 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.only(top: 50),
                         child: ElevatedButton.icon(
                           icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              createDokumen(
-                                  indexDokumen, noreg.text, fileBytes);
-                            });
-                          },
+                          onPressed: () => createDokumen(model.indexDokumen,
+                              model.noreg.text, model.fileBytes),
                           label: Text('Tambah'),
                         ),
                       )
@@ -161,65 +118,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            // TODO: container dibungkus pakai widget SingleChildScrollView() agar tidak ada error overflow
             Container(
-                child: (fileBytes == null)
+                child: (model.fileBytes == null)
                     ? Text("kosong")
-                    // TODO: Bikin preview sesuai dengan format filenya
-                    // Kalau extensinya png, jpg, dsb load image (seperti dibawah) dan set ukuran imagenya agar saat preview tidak memenuhi layar
-                    // Kalau PDF pakai PDF Viewer, bisa pakai => https://pub.dev/packages/advance_pdf_viewer
-                    : Container(
-                        width: 450,
-                        height: 450,
-                        decoration: BoxDecoration(
-                            image: new DecorationImage(
-                          fit: BoxFit.cover,
-                          image: MemoryImage(fileBytes),
-                        )),
-                      ))
+                    : Image.memory(model.fileBytes))
             // buatpreview
           ],
         ),
-      ),
+      )),
     );
-  }
-}
-
-Future<Dokumen> createDokumen(int jenis, String noreg, var file) async {
-  String base64code = base64.encode(file);
-
-  final msg = jsonEncode({"noreg": noreg, "jenis": jenis, "file": base64code});
-  final response = await http.post(
-    // Uri.parse('http://127.0.0.1:8000/text'),
-    Uri.parse('https://webhook.site/c502765b-dfce-405b-8bb3-b2c9c556ed43'),
-    headers: <String, String>{
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    },
-    body: msg,
-  );
-  if (response.statusCode == 201) {
-    // print("status 201");
-    return Dokumen.fromJson(jsonDecode(response.body));
-  } else {
-    // print("gagal");
-    throw Exception('Gagal membuat dokumen');
-  }
-}
-
-class Dokumen {
-  final int id;
-  final int jenis;
-  final String noreg;
-
-  Dokumen({required this.id, required this.jenis, required this.noreg});
-
-  factory Dokumen.fromJson(Map<String, dynamic> json) {
-    print("factory fromJson");
-    return Dokumen(
-        //bisa ganti key sesuai kebutuhan dengan
-        //dengan catatan yang diambil pada object adalah nama colom di DB
-        id: json['id'],
-        jenis: json['jenis'],
-        noreg: json['noreg']);
   }
 }
