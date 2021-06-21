@@ -4,9 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:ujirow/core_utilitas/utility_ui.dart';
-import 'package:ujirow/models/sidebar_item.dart';
-import 'package:ujirow/view_model/vm_sidebar.dart';
+import 'package:akad/core_utilitas/utility_ui.dart';
+import 'package:akad/models/sidebar_item.dart';
+import 'package:akad/view_model/vm_sidebar.dart';
 
 class SidebarItemW extends ViewModelWidget<SidebarVM> {
   final Map<String, dynamic>? data;

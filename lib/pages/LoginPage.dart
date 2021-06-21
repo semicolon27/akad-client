@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ujirow/pages/template.dart';
+import 'package:akad/pages/template.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({

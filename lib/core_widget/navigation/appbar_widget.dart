@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:ujirow/core_utilitas/support_provider/login_provider.dart';
-import 'package:ujirow/core_utilitas/utility_ui.dart';
+import 'package:akad/core_utilitas/support_provider/login_provider.dart';
+import 'package:akad/core_utilitas/utility_ui.dart';
 
 // desktop
 SliverAppBar sliverAppBarW() {
