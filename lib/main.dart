@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 // untuk bisa menggunakan widget dri luar, cuma perlu import filenya saja
 // dan pakai seperti biasa
-import 'package:ujirow/pages/HomePage.dart';
-import 'package:ujirow/pages/LoginPage.dart';
+import 'package:akad/pages/HomePage.dart';
+import 'package:akad/pages/LoginPage.dart';
 
 void main() => runApp(MyApp());
 

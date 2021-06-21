@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:ujirow/pages/template.dart';
+import 'package:akad/pages/template.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({
@@ -163,23 +163,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             // TODO: container dibungkus pakai widget SingleChildScrollView() agar tidak ada error overflow
             Container(
-              child: (fileBytes == null)
-                  ? Text("kosong")
-                  // TODO: Bikin preview sesuai dengan format filenya
-                  // Kalau extensinya png, jpg, dsb load image (seperti dibawah) dan set ukuran imagenya agar saat preview tidak memenuhi layar
-                  // Kalau PDF pakai PDF Viewer, bisa pakai => https://pub.dev/packages/advance_pdf_viewer
-                  : Container(
-                      width: 450,
-                      height: 450,
-                      decoration: BoxDecoration(
-                        image: new DecorationImage(
+                child: (fileBytes == null)
+                    ? Text("kosong")
+                    // TODO: Bikin preview sesuai dengan format filenya
+                    // Kalau extensinya png, jpg, dsb load image (seperti dibawah) dan set ukuran imagenya agar saat preview tidak memenuhi layar
+                    // Kalau PDF pakai PDF Viewer, bisa pakai => https://pub.dev/packages/advance_pdf_viewer
+                    : Container(
+                        width: 450,
+                        height: 450,
+                        decoration: BoxDecoration(
+                            image: new DecorationImage(
                           fit: BoxFit.cover,
                           image: MemoryImage(fileBytes),
-                        )
-                      ),
-                  
-                  )
-            )
+                        )),
+                      ))
             // buatpreview
           ],
         ),
