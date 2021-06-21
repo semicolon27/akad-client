@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:ujirow/core_utilitas/utility_ui.dart';
-import 'package:ujirow/core_widget/navigation/sidebar_item_widget.dart';
-import 'package:ujirow/core_widget/navigation/sidebar_route_list.dart';
-import 'package:ujirow/models/sidebar_item.dart';
-import 'package:ujirow/view_model/vm_sidebar.dart';
-import 'package:ujirow/view_model/vm_template.dart';
+import 'package:akad/core_utilitas/utility_ui.dart';
+import 'package:akad/core_widget/navigation/sidebar_item_widget.dart';
+import 'package:akad/core_widget/navigation/sidebar_route_list.dart';
+import 'package:akad/models/sidebar_item.dart';
+import 'package:akad/view_model/vm_sidebar.dart';
+import 'package:akad/view_model/vm_template.dart';
 
 class SidebarWidget extends StatelessWidget {
   final TemplateVM? model;

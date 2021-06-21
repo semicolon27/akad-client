@@ -2,8 +2,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ujirow/pages/HomePage.dart';
-import 'package:ujirow/pages/LoginPage.dart';
+// untuk bisa menggunakan widget dri luar, cuma perlu import filenya saja
+// dan pakai seperti biasa
+import 'package:akad/pages/HomePage.dart';
+import 'package:akad/pages/LoginPage.dart';
 
 void main() => runApp(MyApp());
 

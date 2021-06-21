@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:ujirow/core_utilitas/layout.dart';
-import 'package:ujirow/core_widget/navigation/appbar_widget.dart';
-import 'package:ujirow/view_model/vm_template.dart';
-import 'package:ujirow/core_widget/navigation/navigation_widget.dart';
+import 'package:akad/core_utilitas/layout.dart';
+import 'package:akad/core_widget/navigation/appbar_widget.dart';
+import 'package:akad/view_model/vm_template.dart';
+import 'package:akad/core_widget/navigation/navigation_widget.dart';
 
 class TemplateWidget extends StatelessWidget {
   final Widget? child;

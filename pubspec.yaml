@@ -1,4 +1,4 @@
-name: ujirow
+name: akad
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -42,6 +42,7 @@ dependencies:
     git: # https://pub.dev/packages/flutter_icons
       url: https://github.com/adarsh-technocrat/flutter-icons.git
       branch: null-safety-migration
+  dio: ^4.0.0
 
 
 dev_dependencies:
