@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
     return TemplateWidgetLogin(
         child: Scaffold(
           body: Column(
-            children: <Widget>[
+            children: [
               Text(
                   "LOG IN",
                   style: Theme.of(context).textTheme.headline2,
