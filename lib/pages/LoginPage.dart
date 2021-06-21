@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
     return TemplateWidgetLogin(
         child: Scaffold(
           body: Column(
-            children: <Widget>[
+            children: [
               Text(
                   "LOG IN",
                   style: Theme.of(context).textTheme.headline2,
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                              Text(
                                'Forget Password?',
                                style: TextStyle(
-                                 color: Colors.red,
+                                 color: Colors.blueAccent,
                                  fontSize: 14,
                                ),
                              ),
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                            onPressed: (){},
                            minWidth: 250,
                            splashColor: Colors.green,
-                           color: Colors.red,
+                           color: Colors.blueAccent,
                            padding: EdgeInsets.symmetric(
                              vertical: 12,
                            ),
