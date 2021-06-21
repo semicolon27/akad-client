@@ -47,3 +47,49 @@ class TemplateWidget extends StatelessWidget {
     );
   }
 }
+
+class TemplateWidgetLogin extends StatelessWidget {
+  final Widget? child;
+
+  TemplateWidgetLogin({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDesktop = isDisplayDesktop(context);
+
+    return ViewModelBuilder<TemplateVM>.reactive(
+      viewModelBuilder: () => TemplateVM(),
+      builder: (context, model, _) {
+        if (isDesktop) {
+          return Scaffold(
+            body: Row(
+              children: [
+                SidebarWidget(model: model),
+                Expanded(
+                  child: NestedScrollView(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return <Widget>[//sliverAppBarW()
+                      ];
+                    },
+                    body: child ?? Container(),
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Scaffold(
+            //appBar: appBarW(),
+            body: SingleChildScrollView(child: child),
+            //drawer: SidebarWidget(model: model),
+          );
+        }
+      },
+    );
+  }
+}
+
+

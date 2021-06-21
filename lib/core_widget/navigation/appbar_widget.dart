@@ -39,27 +39,6 @@ SliverAppBar sliverAppBarW() {
                 vertical: 20.sp,
                 horizontal: 10.sp,
               ),
-              // child: Consumer<LoginProvider>(
-              //   builder: (context, data, _) {
-              //     return Column(
-              //       crossAxisAlignment: CrossAxisAlignment.end,
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         Text(
-              //           data.nama ?? '',
-              //           style: textStyle.textStyleSubtitle1.copyWith(
-              //             fontFamily: "Nunito",
-              //             fontWeight: FontWeight.w600,
-              //           ),
-              //         ),
-              //         Text(
-              //           data.kantor ?? '',
-              //           style: textStyle.textStyleCaption,
-              //         ),
-              //       ],
-              //     );
-              //   },
-              // ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,
