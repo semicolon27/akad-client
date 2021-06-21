@@ -18,7 +18,7 @@ class DetailVM extends BaseViewModel {
   void pilihFile() async {
     var picked = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      allowedExtensions: ['jpg', 'jpeg', 'png'],
     );
     if (picked != null) {
       fileBytes = picked.files.first.bytes;
