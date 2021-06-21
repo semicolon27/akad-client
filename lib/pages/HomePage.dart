@@ -168,7 +168,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   // TODO: Bikin preview sesuai dengan format filenya
                   // Kalau extensinya png, jpg, dsb load image (seperti dibawah) dan set ukuran imagenya agar saat preview tidak memenuhi layar
                   // Kalau PDF pakai PDF Viewer, bisa pakai => https://pub.dev/packages/advance_pdf_viewer
-                  : Image.memory(fileBytes),
+                  : Container(
+                      width: 450,
+                      height: 450,
+                      decoration: BoxDecoration(
+                        image: new DecorationImage(
+                          fit: BoxFit.cover,
+                          image: MemoryImage(fileBytes),
+                        )
+                      ),
+                  
+                  )
             )
             // buatpreview
           ],
