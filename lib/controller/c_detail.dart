@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:akad/models/dokumen.dart';
 import 'package:dio/dio.dart';
 
-Future<Dokumen> createDokumen(int jenis, String noreg, var file) async {
+Future<Dokumen> createDokumen(
+    int jenis, String noreg, var file, String filename) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
     'noreg': noreg,
     'jenis': jenis,
-    'file': await MultipartFile.fromBytes(file, filename: 'ada.txt'),
+    'file': await MultipartFile.fromBytes(file, filename: filename),
   });
 
   Response responses = await dio.post(

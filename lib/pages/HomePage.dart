@@ -108,8 +108,11 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         padding: const EdgeInsets.only(top: 50),
                         child: ElevatedButton.icon(
                           icon: Icon(Icons.add),
-                          onPressed: () => createDokumen(model.indexDokumen,
-                              model.noreg.text, model.fileBytes),
+                          onPressed: () => createDokumen(
+                              model.indexDokumen,
+                              model.noreg.text,
+                              model.fileBytes,
+                              model.fileName),
                           label: Text('Tambah'),
                         ),
                       )
