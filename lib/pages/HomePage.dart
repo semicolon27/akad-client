@@ -1,9 +1,18 @@
+import 'dart:html';
+import 'dart:js';
+import 'dart:typed_data';
+
 import 'package:akad/controller/c_detail.dart';
 import 'package:akad/view_model/vm_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akad/pages/template.dart';
+import 'package:flutter/services.dart';
+import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+
 
 class DetailDokumen extends StatefulWidget {
   DetailDokumen({
@@ -15,6 +24,7 @@ class DetailDokumen extends StatefulWidget {
 }
 
 class _DetailDokumenState extends State<DetailDokumen> {
+ 
   @override
   Widget build(BuildContext context) {
     // cuma perlu di bungkus saja
@@ -56,8 +66,18 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         child: Row(children: [
                           ElevatedButton(
                               onPressed: () => model.pilihFile(),
-                              child: Text("Upload file")),
-                          Text(model.fileName)
+                              child: Text("Upload file")
+                            ),
+                          Container(
+                            height: 30,
+                            width: 215,
+                            padding: const EdgeInsets.all(5),
+                            margin : const EdgeInsets.only(left: 2),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)
+                            ),
+                            child: Text(model.fileName),
+                          ),
                         ]),
                       ),
                     ],
@@ -121,14 +141,30 @@ class _DetailDokumenState extends State<DetailDokumen> {
                 ],
               ),
             ),
+            
             Container(
                 child: (model.fileBytes == null)
                     ? Text("kosong")
-                    : Image.memory(model.fileBytes))
-            // buatpreview
+                    : Container(
+                          width: 500,
+                          height: 350,
+                          margin: const EdgeInsetsDirectional.all(5),
+                        child: 
+                          PdfPreview(
+                            build: (newFile) => _generatePdf(newFile, model.fileBytes),
+                            )
+                      )
+            )
           ],
         ),
       )),
     );
   }
+}
+
+
+Future<Uint8List> _generatePdf(PdfPageFormat format, var filepdf) async {    
+    await Printing.layoutPdf(onLayout: (_) => filepdf);
+
+    return filepdf;
 }
