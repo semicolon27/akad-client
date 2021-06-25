@@ -62,7 +62,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                             )),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 50),
+                        padding: const EdgeInsets.only(top: 25),
                         child: Row(children: [
                           ElevatedButton(
                               onPressed: () => model.pilihFile(),
@@ -125,7 +125,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                             ),
                           )),
                       Padding(
-                        padding: const EdgeInsets.only(top: 50),
+                        padding: const EdgeInsets.only(top: 25),
                         child: ElevatedButton.icon(
                           icon: Icon(Icons.add),
                           onPressed: () => createDokumen(
@@ -137,41 +137,23 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         ),
                       )
                     ],
-                  ) // Row Baris Utama 2
+                  ) 
                 ],
               ),
             ),
             Container(
-                child:
-                    (model.fileBytes == null)
+                child: (model.fileBytes == null)
                     ? Text("kosong")
-                    : Container(
-                      // width: 500,
-                          // height: 350,
-                          // padding: const EdgeInsets.all(25),
-                          // margin: const EdgeInsetsDirectional.all(25),
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(),
-                          //   image: new DecorationImage(
-                          //     fit: BoxFit.contain,
-                          //     image: MemoryImage(model.fileBytes),
-                          //   )
-                          // ),
-                          width: 500,
-                          height: 350,
-                          margin: const EdgeInsetsDirectional.all(5),
-                        //if (picked == '.jpg'){
-                        //return image;
-                        //} 
-                        //else (pilihFile == '.pdf' && '.doc'){
-                        // return PdfPreview
-                        // }
-                        child: 
-                          PdfPreview(
-                            build: (newFile) => _generatePdf(newFile, model.fileBytes),
-                            )
-                      )
-            ),
+                    : (model.filePick == 'pdf')
+                        ? Container(
+                            width: 500,
+                            height: 350,
+                            margin: const EdgeInsetsDirectional.all(5),
+                            child: PdfPreview(
+                              build: (newFile) =>
+                                  _generatePdf(newFile, model.fileBytes),
+                            ))
+                        : Image.memory(model.fileBytes))
           ],
         ),
       )),
