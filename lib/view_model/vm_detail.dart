@@ -9,11 +9,11 @@ class DetailVM extends BaseViewModel {
   final TextEditingController noreg = TextEditingController();
   final doc = pw.Document();
   var fileBytes;
+  var fileExtension;
   var indexDokumen;
   var jenis;
   // ignore: unused_field
 
-  
   // int? indexDokumen;
   // String? jenis;
   String fileName = "File belum dipilih";
@@ -29,10 +29,11 @@ class DetailVM extends BaseViewModel {
       allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
     );
     if (picked != null) {
+      fileExtension = picked.files.first.extension;
       fileBytes = picked.files.first.bytes;
       fileName = picked.files.first.name;
       notifyListeners();
-    }
+    } else {}
   }
 
   void pilihJenisDokumen(var newValue) {
@@ -40,6 +41,4 @@ class DetailVM extends BaseViewModel {
     indexDokumen = jenisDokumen.indexOf(jenis) + 1;
     notifyListeners();
   }
-
-
 }
