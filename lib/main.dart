@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 // untuk bisa menggunakan widget dri luar, cuma perlu import filenya saja
 // dan pakai seperti biasa
-import 'package:akad/pages/HomePage.dart';
 import 'package:akad/pages/LoginPage.dart';
+import 'package:akad/pages/HomePage.dart';
+import 'package:akad/pages/DetailPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,13 +31,14 @@ class MyApp extends StatelessWidget {
           // GetPage(name: '/ini-nama-route', page: () => IniWidgetHalamannya()),
           // WARNING : routenya jangan pakai slash kosong ('/') ya, ada bug di sidebarnya
           getPages: [
-            GetPage(name: '/detail', page: () => DetailDokumen()),
             GetPage(name: '/login', page: () => LoginPage()),
+            GetPage(name: '/home', page: () => Home()),
+            GetPage(name: '/detail', page: () => DetailDokumen()),
           ],
 
           // route yang di load pertama kali
           // Nanti kalau login nya dah jadi, ganti jadi /login
-          initialRoute: '/detail',
+          initialRoute: '/home',
         );
       },
     );
