@@ -32,8 +32,6 @@ class DetailVM extends BaseViewModel {
       fileBytes = picked.files.first.bytes;
       fileName = picked.files.first.name;
       notifyListeners();
-    } else {
-      
     }
   }
 

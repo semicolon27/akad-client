@@ -44,7 +44,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 50),
+                        padding: EdgeInsets.only(top: 25),
                         child: Text("Nomor Registrasi",
                             style: TextStyle(fontSize: 20)),
                       ),
@@ -86,7 +86,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 50),
+                        padding: EdgeInsets.only(top: 25),
                         child: Text("Jenis Dokumen",
                             textAlign: TextAlign.left,
                             style: TextStyle(fontSize: 20)),
@@ -141,7 +141,6 @@ class _DetailDokumenState extends State<DetailDokumen> {
                 ],
               ),
             ),
-            
             Container(
                 child:
                     (model.fileBytes == null)
@@ -161,6 +160,12 @@ class _DetailDokumenState extends State<DetailDokumen> {
                           width: 500,
                           height: 350,
                           margin: const EdgeInsetsDirectional.all(5),
+                        //if (picked == '.jpg'){
+                        //return image;
+                        //} 
+                        //else (pilihFile == '.pdf' && '.doc'){
+                        // return PdfPreview
+                        // }
                         child: 
                           PdfPreview(
                             build: (newFile) => _generatePdf(newFile, model.fileBytes),
