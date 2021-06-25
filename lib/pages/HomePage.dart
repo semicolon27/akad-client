@@ -1,181 +1,71 @@
-import 'dart:html';
-import 'dart:js';
-import 'dart:typed_data';
-
 import 'package:akad/controller/c_detail.dart';
-import 'package:akad/view_model/vm_detail.dart';
-import 'package:flutter/material.dart';
-
+import 'package:akad/models/doklist.dart';
+import 'package:akad/view_model/vm_home.dart';
 import 'package:akad/pages/template.dart';
-import 'package:flutter/services.dart';
-import 'package:printing/printing.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
-
-class DetailDokumen extends StatefulWidget {
-  DetailDokumen({
+class Home extends StatefulWidget {
+  Home({
     Key? key,
   }) : super(key: key);
 
   @override
-  _DetailDokumenState createState() => _DetailDokumenState();
+  _HomeState createState() => _HomeState();
 }
 
-class _DetailDokumenState extends State<DetailDokumen> {
- 
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
-          body: ViewModelBuilder<DetailVM>.reactive(
-        viewModelBuilder: () => DetailVM(),
-        builder: (context, model, child) => Column(
-          children: [
-            Form(
-              autovalidateMode: AutovalidateMode.always,
-              key: model.formkey,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: Text("Nomor Registrasi",
-                            style: TextStyle(fontSize: 20)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Container(
-                            height: 50,
-                            width: 300,
-                            child: TextField(
-                              controller: model.noreg,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Masukan Inputan',
-                              ),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: Row(children: [
-                          ElevatedButton(
-                              onPressed: () => model.pilihFile(),
-                              child: Text("Upload file")
-                            ),
-                          Container(
-                            height: 30,
-                            width: 215,
-                            padding: const EdgeInsets.all(5),
-                            margin : const EdgeInsets.only(left: 2),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)
-                            ),
-                            child: Text(model.fileName),
-                          ),
-                        ]),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(top: 50),
-                        child: Text("Jenis Dokumen",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(fontSize: 20)),
-                      ),
-                      Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          child: Container(
-                            height: 50,
-                            width: 300,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.grey, width: 1)),
-                            child: DropdownButton(
-                              hint: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 16),
-                                child: Text("Pilih Jenis Dokumen"),
-                              ),
-                              dropdownColor: Colors.white,
-                              icon: Icon(Icons.arrow_drop_down),
-                              isExpanded: true,
-                              underline: SizedBox(),
-                              value: model.jenis,
-                              onChanged: (newValue) =>
-                                  model.pilihJenisDokumen(newValue),
-                              items: model.jenisDokumen.map((valueItem) {
-                                return DropdownMenuItem(
-                                  value: valueItem,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 16),
-                                    child: Text(valueItem),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: ElevatedButton.icon(
-                          icon: Icon(Icons.add),
-                          onPressed: () => createDokumen(
-                              model.indexDokumen,
-                              model.noreg.text,
-                              model.fileBytes,
-                              model.fileName),
-                          label: Text('Tambah'),
-                        ),
-                      )
-                    ],
-                  ) // Row Baris Utama 2
+          body: ViewModelBuilder<HomeVM>.reactive(
+        viewModelBuilder: () => HomeVM(),
+        builder: (context, model, child) => FutureBuilder<List<Doklist>>(
+          // child: FutureBuilder<List<Doklist>>(
+          future: readDoklist(),
+          builder: (context, snapshot) {
+            if (snapshot.data == null) {
+              return Container(child: Text("Loading"));
+            } else
+              return DataTable(
+                //data secara horizontal
+                columns: <DataColumn>[
+                  DataColumn(label: Text("No. Registrasi")),
+                  DataColumn(label: Text("Nama")),
+                  DataColumn(label: Text("Jenis Dokumen")),
+                  DataColumn(label: Text("Aksi")),
                 ],
-              ),
-            ),
-            
-            Container(
-                child: (model.fileBytes == null)
-                    ? Text("kosong")
-                    : Container(
-                      // width: 500,
-                          // height: 350,
-                          // padding: const EdgeInsets.all(25),
-                          // margin: const EdgeInsetsDirectional.all(25),
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(),
-                          //   image: new DecorationImage(
-                          //     fit: BoxFit.contain,
-                          //     image: MemoryImage(model.fileBytes),
-                          //   )
-                          // ),
-                          width: 500,
-                          height: 350,
-                          margin: const EdgeInsetsDirectional.all(5),
-                        child: 
-                          PdfPreview(
-                            build: (newFile) => _generatePdf(newFile, model.fileBytes),
-                            )
-                      )
-            )
-          ],
+
+                //data secara vertikal
+                rows: snapshot.data!
+                    .map(
+                      (data) => DataRow(
+                        cells: [
+                          DataCell(Text(data.noreg)),
+                          DataCell(Text(data.nama)),
+                          DataCell(Text(data.jenis)),
+                          DataCell(ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                onSurface: Colors.blue[600]),
+                            onPressed: null,
+                            child: Text('Detail'),
+                          )),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              );
+            // return ListTile(
+            //   title: Text(snapshot.data![i].nama),
+            //   subtitle: Text(snapshot.data![i].noreg),
+            // );
+            // });
+          },
         ),
       )),
     );
   }
-}
-
-
-Future<Uint8List> _generatePdf(PdfPageFormat format, var filepdf) async {    
-    await Printing.layoutPdf(onLayout: (_) => filepdf);
-
-    return filepdf;
 }
