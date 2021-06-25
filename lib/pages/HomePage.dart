@@ -146,6 +146,17 @@ class _DetailDokumenState extends State<DetailDokumen> {
                 child: (model.fileBytes == null)
                     ? Text("kosong")
                     : Container(
+                      // width: 500,
+                          // height: 350,
+                          // padding: const EdgeInsets.all(25),
+                          // margin: const EdgeInsetsDirectional.all(25),
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(),
+                          //   image: new DecorationImage(
+                          //     fit: BoxFit.contain,
+                          //     image: MemoryImage(model.fileBytes),
+                          //   )
+                          // ),
                           width: 500,
                           height: 350,
                           margin: const EdgeInsetsDirectional.all(5),
