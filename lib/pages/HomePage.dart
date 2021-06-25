@@ -143,7 +143,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
             ),
             
             Container(
-                child: (model.fileBytes == null)
+                child:
+                    (model.fileBytes == null)
                     ? Text("kosong")
                     : Container(
                       // width: 500,
@@ -165,7 +166,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                             build: (newFile) => _generatePdf(newFile, model.fileBytes),
                             )
                       )
-            )
+            ),
           ],
         ),
       )),
