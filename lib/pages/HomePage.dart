@@ -20,7 +20,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<HomeVM>.reactive(
@@ -32,9 +31,7 @@ class _HomeState extends State<Home> {
             border: Border.all(
             color: Colors.white,
             width: 15,
-          ),
-            borderRadius: const BorderRadius.all(Radius.circular(30)),
-          ),
+          )),
           child: SingleChildScrollView(
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +53,7 @@ class _HomeState extends State<Home> {
                     )),
                   ],
                 ),
-                /*Row(
+                Row(
                   children: [
                     Expanded(
                       child: Text(
@@ -72,7 +69,7 @@ class _HomeState extends State<Home> {
                       onChanged: (value) {},
                     )),
                   ],
-                ),*/
+                ),
                 SizedBox(
                   width: double.infinity,
                   child: FutureBuilder<List<Doklist>>(
@@ -83,6 +80,7 @@ class _HomeState extends State<Home> {
                       } else
                         return DataTable(
                           decoration: BoxDecoration(
+                            color: Colors.white,
                           ),
                           columns: <DataColumn>[
                             DataColumn(label: Text("No. Registrasi")),
@@ -102,7 +100,7 @@ class _HomeState extends State<Home> {
                                     DataCell(Text(data.jenis)),
                                     DataCell(ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          onSurface: Colors.blue[600]),
+                                          onSurface: Colors.blue),
                                       onPressed: null,
                                       child: Text('Detail'),
                                     )),
@@ -143,7 +141,7 @@ class SearchBox extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
-          width: 150,
+          width: 170,
           height: 35,
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.symmetric(
