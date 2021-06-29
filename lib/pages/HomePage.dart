@@ -1,3 +1,4 @@
+import 'package:akad/constant.dart';
 import 'package:akad/controller/c_detail.dart';
 import 'package:akad/models/doklist.dart';
 import 'package:akad/view_model/vm_home.dart';
@@ -21,15 +22,29 @@ class _HomeState extends State<Home> {
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
-        body: ViewModelBuilder<HomeVM>.reactive(
+          body: ViewModelBuilder<HomeVM>.reactive(
         viewModelBuilder: () => HomeVM(),
         builder: (context, model, child) => Container(
-          margin: new EdgeInsets.all(30),
+          width: double.infinity,
+          padding: EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
           child: Column(
-            children: [
+            crossAxisAlignment: CrossAxisAlignment.start,
+            //padding: EdgeInset
+            children: <Widget>[
+              Text(
+                "Data Pengguna", 
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              Container(
+                 margin: EdgeInsets.all(30.0),
+              ),
               SizedBox(
                 width: double.infinity,
-                height: double.infinity,
+                height: 200,
+                //scrollDirection: Axis.horizontal,
                 child: FutureBuilder<List<Doklist>>(
                   // child: FutureBuilder<List<Doklist>>(
                   future: readDoklist(),
@@ -38,6 +53,7 @@ class _HomeState extends State<Home> {
                       return Container(child: Text("Loading"));
                     } else
                       return DataTable(
+                        //crossAxisAlignment: CrossAxisAlignment.center,
                         //data secara horizontal
                         columns: <DataColumn>[
                           DataColumn(label: Text("No. Registrasi")),
