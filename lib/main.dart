@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
 
           // route yang di load pertama kali
           // Nanti kalau login nya dah jadi, ganti jadi /login
-          initialRoute: '/detail',
+          initialRoute: '/edit',
         );
       },
     );

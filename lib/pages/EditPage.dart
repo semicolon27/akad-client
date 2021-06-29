@@ -18,13 +18,13 @@ class EditDokumen extends StatefulWidget {
 class _EditDokumenState extends State<EditDokumen> {
   @override
   Widget build(BuildContext context) {
-    // cuma perlu di bungkus saja
-    //yoooo
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<DetailVM>.reactive(
         viewModelBuilder: () => DetailVM(),
-        builder: (context, model, child) => Column( 
+        builder: (context, model, child) => SingleChildScrollView(
+        child:
+        Column( 
           children: [
             Form(
               autovalidateMode: AutovalidateMode.always,
@@ -131,6 +131,7 @@ class _EditDokumenState extends State<EditDokumen> {
               )
           ],
         ),
+      )
       )),
     );
   }
