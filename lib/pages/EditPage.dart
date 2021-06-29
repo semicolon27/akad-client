@@ -100,12 +100,12 @@ class _EditDokumenState extends State<EditDokumen> {
                               child: 
                                 Text('Delete'),
                                
-                            ), //elevated
+                            ),
                           ),
 
                       ]),
                     ],
-                  ) // Row Baris Utama 2
+                  ) // 
                 ],
               ),
             ),

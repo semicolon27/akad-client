@@ -57,16 +57,19 @@ class _DetailDokumenState extends State<DetailDokumen> {
                             child: Row(children: [
                               ElevatedButton(
                                   onPressed: () => model.pilihFile(),
-                                  child: Text("Upload file")
+                                  child: Text("Upload File")
                               ),
                               Container(
-                                width: 218,
+                                width: 210,
+                                height: 30,
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
-                                  )
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                                 padding: EdgeInsets.all(5),
+                                margin: EdgeInsets.all(5),
                                 child:
                                  Text(model.fileName),
                               ),
@@ -91,7 +94,9 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 width: 300,
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Colors.grey, width: 1)),
+                                        Border.all(color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(5),
+                                ),
                                 child: DropdownButton(
                                   hint: Padding(
                                     padding: EdgeInsets.symmetric(
@@ -160,8 +165,6 @@ class _DetailDokumenState extends State<DetailDokumen> {
             ),
               )
           )),
-        
-        
       );
   }
 }
