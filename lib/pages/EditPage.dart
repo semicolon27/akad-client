@@ -20,13 +20,11 @@ class _EditDokumenState extends State<EditDokumen> {
   Widget build(BuildContext context) {
     return TemplateWidget(
       child: Scaffold(
-          body: ViewModelBuilder<DetailVM>.reactive(
-        viewModelBuilder: () => DetailVM(),
-        builder: (context, model, child) => SingleChildScrollView(
-        child:
-        Column( 
-          children: [
-            Form(
+        body: ViewModelBuilder<DetailVM>.reactive(
+          viewModelBuilder: () => DetailVM(),
+          builder: (context, model, child) => SingleChildScrollView(
+          child: Column( 
+            children: [ Form(
               autovalidateMode: AutovalidateMode.always,
               key: model.formkey,
               child: Row(
@@ -69,26 +67,24 @@ class _EditDokumenState extends State<EditDokumen> {
                             height: 50,
                             width: 300,
                             child: Text("jenis")
-                          )),
+                          )
+                      ),
                       Row(
                         children:[
                           Padding(
                             padding: const EdgeInsets.only(top: 50, right: 15),
                             child: ElevatedButton(
-                              //icon: Icon(Icons.edit),
                               onPressed: () => createDokumen(
-                                  model.indexDokumen,
-                                  model.noreg.text,
-                                  model.fileBytes,
-                                  model.fileName),
-                              child: Text('Edit'),
-                              
+                                model.indexDokumen,
+                                model.noreg.text,
+                                model.fileBytes,
+                                model.fileName),
+                                child: Text('Edit'),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: ElevatedButton(
-                              // icon: Icon(Icons.delete),
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.red,
                               ),
@@ -97,12 +93,9 @@ class _EditDokumenState extends State<EditDokumen> {
                                   model.noreg.text,
                                   model.fileBytes,
                                   model.fileName),
-                              child: 
-                                Text('Delete'),
-                               
+                                  child: Text('Delete'),
                             ),
                           ),
-
                       ]),
                     ],
                   ) // 
@@ -128,11 +121,12 @@ class _EditDokumenState extends State<EditDokumen> {
                             child:
                               Image.memory(model.fileBytes)
                           )
-              )
-          ],
-        ),
-      )
-      )),
+            )
+            ],
+          ),
+          )
+        )
+      ),
     );
   }
 }

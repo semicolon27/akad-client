@@ -21,23 +21,22 @@ class _DetailDokumenState extends State<DetailDokumen> {
     return TemplateWidget(
           child: Scaffold(
               body: ViewModelBuilder<DetailVM>.reactive(
-            viewModelBuilder: () => DetailVM(),
-            builder: (context, model, child) => SingleChildScrollView(
-            child: Column(
-              children: [
-                Form(
-                  autovalidateMode: AutovalidateMode.always,
-                  key: model.formkey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
+                viewModelBuilder: () => DetailVM(),
+                builder: (context, model, child) => SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Form(
+                      autovalidateMode: AutovalidateMode.always,
+                      key: model.formkey,
+                      child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [ 
+                          Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [ Padding(
                             padding: EdgeInsets.only(top: 50),
                             child: Text("Nomor Registrasi",
-                                style: TextStyle(fontSize: 20)),
+                            style: TextStyle(fontSize: 20)),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 16),
@@ -50,7 +49,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                     border: OutlineInputBorder(),
                                     hintText: 'Masukan Inputan',
                                   ),
-                                )),
+                                )
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 50),
@@ -73,7 +73,6 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 child:
                                  Text(model.fileName),
                               ),
-                             
                             ]),
                           ),
                         ],
@@ -93,23 +92,22 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 height: 50,
                                 width: 300,
                                 decoration: BoxDecoration(
-                                    border:
-                                        Border.all(color: Colors.grey, width: 1),
-                                    borderRadius: BorderRadius.circular(5),
+                                  border:
+                                    Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: DropdownButton(
                                   hint: Padding(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 16),
-                                    child: Text("Pilih Jenis Dokumen"),
+                                      horizontal: 8, vertical: 16),
+                                      child: Text("Pilih Jenis Dokumen"),
                                   ),
                                   dropdownColor: Colors.white,
                                   icon: Icon(Icons.arrow_drop_down),
                                   isExpanded: true,
                                   underline: SizedBox(),
                                   value: model.jenis,
-                                  onChanged: (newValue) =>
-                                      model.pilihJenisDokumen(newValue),
+                                  onChanged: (newValue) => model.pilihJenisDokumen(newValue),
                                   items: model.jenisDokumen.map((valueItem) {
                                     return DropdownMenuItem(
                                       value: valueItem,
@@ -121,7 +119,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                     );
                                   }).toList(),
                                 ),
-                              )),
+                              )
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: ElevatedButton(
@@ -136,7 +135,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                           )
                         ],
                       ) 
-                    ],
+                  ],
                   ),
                 ),
                 Container(
@@ -162,9 +161,10 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               )
                 )
               ],
-            ),
+                ),
+                )
               )
-          )),
-      );
+          ),
+    );
   }
 }
