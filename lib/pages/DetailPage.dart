@@ -57,8 +57,21 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         child: Row(children: [
                           ElevatedButton(
                               onPressed: () => model.pilihFile(),
-                              child: Text("Upload file")),
-                          Text(model.fileName)
+                              child: Text("Upload file")
+                          ),
+                          Container(
+                            // height: 0,
+                            width: 218,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              )
+                            ),
+                            padding: EdgeInsets.all(5),
+                            child:
+                             Text(model.fileName),
+                          ),
+                         
                         ]),
                       ),
                     ],
@@ -107,15 +120,16 @@ class _DetailDokumenState extends State<DetailDokumen> {
                           )),
                       Padding(
                         padding: const EdgeInsets.only(top: 50),
-                        child: ElevatedButton.icon(
-                          icon: Icon(Icons.add),
-                          onPressed: () => createDokumen(
-                              model.indexDokumen,
-                              model.noreg.text,
-                              model.fileBytes,
-                              model.fileName),
-                          label: Text('Tambah'),
-                        ),
+                        child: ElevatedButton(
+                              //icon: Icon(Icons.edit),
+                              onPressed: () => createDokumen(
+                                  model.indexDokumen,
+                                  model.noreg.text,
+                                  model.fileBytes,
+                                  model.fileName),
+                              child: Text('Tambah'),
+                              
+                            ),
                       )
                     ],
                   ) // Row Baris Utama 2
@@ -124,17 +138,26 @@ class _DetailDokumenState extends State<DetailDokumen> {
             ),
             Container(
                 child: (model.fileBytes == null)
-                    ? Text("kosong")
+                    ? Text(" ")
                     : (model.fileExtension == 'pdf')
                         ? Container(
-                            width: 500,
-                            height: 350,
-                            margin: const EdgeInsetsDirectional.all(5),
-                            child: PdfPreview(
+                            width: 650,
+                            height: 400,
+                            margin: const EdgeInsetsDirectional.all(25),
+                            child: 
+                            PdfPreview(
                               build: (newFile) =>
                                   generatePDF(newFile, model.fileBytes),
-                            ))
-                        : Image.memory(model.fileBytes))
+                            )
+                          )
+                        : Container(
+                            width: 650,
+                            height: 350,
+                            margin: const EdgeInsetsDirectional.all(25),
+                            child:
+                              Image.memory(model.fileBytes)
+                          )
+            )
             // buatpreview
           ],
         ),

@@ -346,7 +346,11 @@ packages:
       name: qr
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
+    version: "2.0.0"
+=======
     version: "2.1.0"
+>>>>>>> 863dd7376a8b908ca3a847f69019734c4e9e34a6
   sky_engine:
     dependency: transitive
     description: flutter
