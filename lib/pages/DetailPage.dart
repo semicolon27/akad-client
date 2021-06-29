@@ -18,7 +18,6 @@ class DetailDokumen extends StatefulWidget {
 class _DetailDokumenState extends State<DetailDokumen> {
   @override
   Widget build(BuildContext context) {
-    // cuma perlu di bungkus saja
     return TemplateWidget(
           child: Scaffold(
               body: ViewModelBuilder<DetailVM>.reactive(
@@ -61,7 +60,6 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                   child: Text("Upload file")
                               ),
                               Container(
-                                // height: 0,
                                 width: 218,
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -122,7 +120,6 @@ class _DetailDokumenState extends State<DetailDokumen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 50),
                             child: ElevatedButton(
-                                  //icon: Icon(Icons.edit),
                                   onPressed: () => createDokumen(
                                       model.indexDokumen,
                                       model.noreg.text,
@@ -133,7 +130,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 ),
                           )
                         ],
-                      ) // Row Baris Utama 2
+                      ) 
                     ],
                   ),
                 ),
@@ -159,16 +156,12 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                   Image.memory(model.fileBytes)
                               )
                 )
-                // buatpreview
               ],
-            ),//column
+            ),
               )
           )),
         
         
       );
-   
-    
-      //TemplateWidget
   }
 }
