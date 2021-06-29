@@ -35,76 +35,92 @@ class _HomeState extends State<Home> {
           ),
             borderRadius: const BorderRadius.all(Radius.circular(30)),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Data Pengguna", 
-                      style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
+          child: SingleChildScrollView(
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Data Pengguna", 
+                        style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      )),
+                    ),
+                    Expanded(
+                      child: SearchBox(
+                      onChanged: (value) {},
                     )),
-                  ),
-                  Expanded(
-                    child: SearchBox(
-                    onChanged: (value) {},
-                  )),
-                ],
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 300,
-                child: FutureBuilder<List<Doklist>>(
-                  // child: FutureBuilder<List<Doklist>>(
-                  future: readDoklist(),
-                  builder: (context, snapshot) {
-                    if (snapshot.data == null) {
-                      return Container(child: Text("Loading"));
-                    } else
-                      return DataTable(
-
-                        decoration: BoxDecoration(
-                        ),
-                        columns: <DataColumn>[
-                          DataColumn(label: Text("No. Registrasi")),
-                          DataColumn(label: Text("Nama")),
-                          DataColumn(label: Text("Jenis Dokumen")),
-                          DataColumn(label: Text("Aksi")),
-                        ],
-
-                        //data secara vertikal
-                        rows: snapshot.data!
-                            .map(
-                              (data) => DataRow(
-                                
-                                cells: [
-                                  DataCell(Text(data.noreg)),
-                                  DataCell(Text(data.nama)),
-                                  DataCell(Text(data.jenis)),
-                                  DataCell(ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        onSurface: Colors.blue[600]),
-                                    onPressed: null,
-                                    child: Text('Detail'),
-                                  )),
-                                ],
-                              ),
-                            )
-                            .toList(),
-                      );
-                    // return ListTile(
-                    //   title: Text(snapshot.data![i].nama),
-                    //   subtitle: Text(snapshot.data![i].noreg),
-                    // );
-                    // });
-                  },
+                  ],
                 ),
-              ),
-            ],
+                /*Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Data Pengguna", 
+                        style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      )),
+                    ),
+                    Expanded(
+                      child: SearchBox(
+                      onChanged: (value) {},
+                    )),
+                  ],
+                ),*/
+                SizedBox(
+                  width: double.infinity,
+                  child: FutureBuilder<List<Doklist>>(
+                    future: readDoklist(),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == null) {
+                        return Container(child: Text("Loading"));
+                      } else
+                        return DataTable(
+                          decoration: BoxDecoration(
+                          ),
+                          columns: <DataColumn>[
+                            DataColumn(label: Text("No. Registrasi")),
+                            DataColumn(label: Text("Nama")),
+                            DataColumn(label: Text("Jenis Dokumen")),
+                            DataColumn(label: Text("Aksi")),
+                          ],
+
+                          //data secara vertikal
+                          rows: snapshot.data!
+                              .map(
+                                (data) => DataRow(
+                                  
+                                  cells: [
+                                    DataCell(Text(data.noreg)),
+                                    DataCell(Text(data.nama)),
+                                    DataCell(Text(data.jenis)),
+                                    DataCell(ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          onSurface: Colors.blue[600]),
+                                      onPressed: null,
+                                      child: Text('Detail'),
+                                    )),
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        );
+                      // return ListTile(
+                      //   title: Text(snapshot.data![i].nama),
+                      //   subtitle: Text(snapshot.data![i].noreg),
+                      // );
+                      // });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       )),
