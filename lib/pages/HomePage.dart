@@ -47,23 +47,10 @@ class _HomeState extends State<Home> {
                         color: Colors.blueAccent,
                       )),
                     ),
-                    Expanded(
-                      child: SearchBox(
-                      onChanged: (value) {},
-                    )),
                   ],
                 ),
                 Row(
                   children: [
-                    Expanded(
-                      child: Text(
-                        "Data Pengguna", 
-                        style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      )),
-                    ),
                     Expanded(
                       child: SearchBox(
                       onChanged: (value) {},

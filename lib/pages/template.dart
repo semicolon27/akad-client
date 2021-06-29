@@ -1,3 +1,4 @@
+import 'package:akad/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:akad/core_utilitas/layout.dart';
@@ -30,9 +31,15 @@ class TemplateWidget extends StatelessWidget {
                         (BuildContext context, bool innerBoxIsScrolled) {
                       return <Widget>[sliverAppBarW()];
                     },
-                    body: child ?? Container(),
+                    body: child ?? Container(
+                      padding: EdgeInsets.all(defaultPadding),
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
               ],
             ),
           );
