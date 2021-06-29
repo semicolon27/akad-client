@@ -4,6 +4,7 @@ import 'package:akad/models/doklist.dart';
 import 'package:akad/view_model/vm_home.dart';
 import 'package:akad/pages/template.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,28 +24,40 @@ class _HomeState extends State<Home> {
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<HomeVM>.reactive(
-        viewModelBuilder: () => HomeVM(),
-        builder: (context, model, child) => Container(
+          viewModelBuilder: () => HomeVM(),
+          builder: (context, model, child) => Container(
           width: double.infinity,
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            border: Border.all(
+            color: Colors.white,
+            width: 15,
+          ),
+            borderRadius: const BorderRadius.all(Radius.circular(30)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            //padding: EdgeInset
             children: <Widget>[
-              Text(
-                "Data Pengguna", 
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Container(
-                 margin: EdgeInsets.all(30.0),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      "Data Pengguna", 
+                      style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    )),
+                  ),
+                  Expanded(
+                    child: SearchBox(
+                    onChanged: (value) {},
+                  )),
+                ],
               ),
               SizedBox(
                 width: double.infinity,
-                height: 200,
-                //scrollDirection: Axis.horizontal,
+                height: 300,
                 child: FutureBuilder<List<Doklist>>(
                   // child: FutureBuilder<List<Doklist>>(
                   future: readDoklist(),
@@ -53,8 +66,9 @@ class _HomeState extends State<Home> {
                       return Container(child: Text("Loading"));
                     } else
                       return DataTable(
-                        //crossAxisAlignment: CrossAxisAlignment.center,
-                        //data secara horizontal
+
+                        decoration: BoxDecoration(
+                        ),
                         columns: <DataColumn>[
                           DataColumn(label: Text("No. Registrasi")),
                           DataColumn(label: Text("Nama")),
@@ -66,6 +80,7 @@ class _HomeState extends State<Home> {
                         rows: snapshot.data!
                             .map(
                               (data) => DataRow(
+                                
                                 cells: [
                                   DataCell(Text(data.noreg)),
                                   DataCell(Text(data.nama)),
@@ -93,6 +108,49 @@ class _HomeState extends State<Home> {
           ),
         ),
       )),
+    );
+  }
+}
+
+// Class Search cuma belum dipindah
+class SearchBox extends StatelessWidget {
+  const SearchBox({
+    Key? key,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final ValueChanged onChanged;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Container(
+          width: 150,
+          height: 35,
+          margin: EdgeInsets.all(10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 5,
+            vertical: 5, // 5 top and bottom
+          ),
+          decoration: BoxDecoration(
+            color: Colors.blue.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: TextField(
+            onChanged: onChanged,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              icon: SvgPicture.asset("assets/icon/Search.svg"),
+              hintText: 'Search...',
+              hintStyle: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
