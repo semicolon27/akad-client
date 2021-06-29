@@ -19,11 +19,12 @@ class _EditDokumenState extends State<EditDokumen> {
   @override
   Widget build(BuildContext context) {
     // cuma perlu di bungkus saja
+    //yoooo
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<DetailVM>.reactive(
         viewModelBuilder: () => DetailVM(),
-        builder: (context, model, child) => Column(
+        builder: (context, model, child) => Column( 
           children: [
             Form(
               autovalidateMode: AutovalidateMode.always,
@@ -115,13 +116,19 @@ class _EditDokumenState extends State<EditDokumen> {
                         ? Container(
                             width: 500,
                             height: 350,
-                            margin: const EdgeInsetsDirectional.all(5),
+                            margin: const EdgeInsetsDirectional.all(20),
                             child: PdfPreview(
                               build: (newFile) =>
                                   generatePDF(newFile, model.fileBytes),
                             ))
-                        : Image.memory(model.fileBytes))
-            
+                        : Container(
+                            width: 650,
+                            height: 350,
+                            margin: const EdgeInsetsDirectional.all(20),
+                            child:
+                              Image.memory(model.fileBytes)
+                          )
+              )
           ],
         ),
       )),
