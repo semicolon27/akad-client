@@ -32,7 +32,6 @@ class _HomeState extends State<Home> {
             color: Colors.white,
             width: 15,
           )),
-          child: SingleChildScrollView(
               child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -47,65 +46,65 @@ class _HomeState extends State<Home> {
                         color: Colors.blueAccent,
                       )),
                     ),
+                    Expanded(
+                        child: SearchBox(
+                        onChanged: (value) {},
+                      )),
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SearchBox(
-                      onChanged: (value) {},
-                    )),
-                  ],
+                Padding(
+                  padding: EdgeInsets.all(10),
                 ),
                 SizedBox(
                   width: double.infinity,
+                  height: 400,
                   child: FutureBuilder<List<Doklist>>(
                     future: readDoklist(),
                     builder: (context, snapshot) {
                       if (snapshot.data == null) {
                         return Container(child: Text("Loading"));
                       } else
-                        return DataTable(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          columns: <DataColumn>[
-                            DataColumn(label: Text("No. Registrasi")),
-                            DataColumn(label: Text("Nama")),
-                            DataColumn(label: Text("Jenis Dokumen")),
-                            DataColumn(label: Text("Aksi")),
-                          ],
+                        return SingleChildScrollView(
+                            child: DataTable(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            columns: <DataColumn>[
+                              DataColumn(label: Text("No. Registrasi", style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataColumn(label: Text("Nama", style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataColumn(label: Text("Jenis Dokumen", style: TextStyle(fontWeight: FontWeight.bold))),
+                              DataColumn(label: Text("Aksi", style: TextStyle(fontWeight: FontWeight.bold))),
+                            ],
 
-                          //data secara vertikal
-                          rows: snapshot.data!
-                              .map(
-                                (data) => DataRow(
-                                  
-                                  cells: [
-                                    DataCell(Text(data.noreg)),
-                                    DataCell(Text(data.nama)),
-                                    DataCell(Text(data.jenis)),
-                                    DataCell(ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          onSurface: Colors.blue),
-                                      onPressed: null,
-                                      child: Text('Detail'),
-                                    )),
-                                  ],
-                                ),
-                              )
-                              .toList(),
-                        );
+                            rows: snapshot.data!
+                                .map(
+                                  (data) => DataRow(
+                                    
+                                    cells: [
+                                      DataCell(Text(data.noreg)),
+                                      DataCell(Text(data.nama)),
+                                      DataCell(Text(data.jenis)),
+                                      DataCell(ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            onSurface: Colors.blue),
+                                        onPressed: null,
+                                        child: Text('Detail'),
+                                      )),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                      );
                       // return ListTile(
                       //   title: Text(snapshot.data![i].nama),
                       //   subtitle: Text(snapshot.data![i].noreg),
                       // );
                       // });
-                    },
-                  ),
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       )),

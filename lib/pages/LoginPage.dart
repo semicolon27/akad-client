@@ -51,13 +51,26 @@ class _LoginPageState extends State<LoginPage> {
                             Row(
                              mainAxisAlignment: MainAxisAlignment.center,
                              children: [
-                              Text(" LOG IN ",
+                              Text(
+                                  " LOG IN ",
                                   style: TextStyle(
                                   color: Colors.blueAccent,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 40,
-                              ),
-                              ),
+                              )),
+                             ],
+                            ),
+                            Padding(
+                            padding: EdgeInsets.all(10)),
+                            Row(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                              Text(
+                                "Silahkan masuk ke Dasboard Admin",
+                                  style: TextStyle(
+                                  color: Colors.blue[100],
+                                  fontSize: 15,
+                              )),
                              ],
                             ),
                             Padding(
