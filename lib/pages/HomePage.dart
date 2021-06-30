@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
       child: Scaffold(
           body: ViewModelBuilder<HomeVM>.reactive(
           viewModelBuilder: () => HomeVM(),
+          onModelReady: (vm) => vm.init(),
           builder: (context, model, child) => Container(
           width: double.infinity,
           padding: EdgeInsets.all(16.0),
@@ -46,7 +47,7 @@ class _HomeState extends State<Home> {
                     ),
                     Expanded(
                         child: SearchBox(
-                        onChanged: (value) {},
+                        onChanged: (value) => model.filterData(value),
                       )),
                   ],
                 ),
@@ -56,14 +57,8 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   width: double.infinity,
                   height: 400,
-                  child: FutureBuilder<List<Doklist>>(
-                    future: readDoklist(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Container(child: Text("Loading"));
-                      } else
-                        return SingleChildScrollView(
-                            child: DataTable(
+                  child: SingleChildScrollView(
+                            child: !model.busy(model.listDokumen) ? DataTable(
                             decoration: BoxDecoration(
                               color: Colors.white,
                             ),
@@ -74,7 +69,7 @@ class _HomeState extends State<Home> {
                               DataColumn(label: Text("Aksi", style: TextStyle(fontWeight: FontWeight.bold))),
                             ],
 
-                            rows: snapshot.data!
+                            rows: model.listDokumen
                                 .map(
                                   (data) => DataRow(
                                     cells: [
@@ -91,15 +86,8 @@ class _HomeState extends State<Home> {
                                   ),
                                 )
                                 .toList(),
-                          ),
-                      );
-                      // return ListTile(
-                      //   title: Text(snapshot.data![i].nama),
-                      //   subtitle: Text(snapshot.data![i].noreg),
-                      // );
-                      // });
-                  },
-                ),
+                          ) : Text('Loading...'),
+                      ),
               ),
             ],
           ),
@@ -116,15 +104,11 @@ class SearchBox extends StatelessWidget {
     required this.onChanged,
   }) : super(key: key);
 
-  final ValueChanged onChanged;
+  final Function(String)? onChanged;
   
   @override
   Widget build(BuildContext context) {
-  return ViewModelBuilder<HomeVM>.reactive(
-    viewModelBuilder: () => HomeVM(),
-    onModelReady: (vm) => vm.init(),
-    builder: (context, vm, _) {
-    return Row(
+  return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
@@ -142,7 +126,7 @@ class SearchBox extends StatelessWidget {
           //Kolom Search : filter data
           child: TextFormField(
             //onChanged: onChanged,
-            onChanged: (v) => vm.filterData(v),
+            onChanged: onChanged,
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
               enabledBorder: InputBorder.none,
@@ -162,20 +146,6 @@ class SearchBox extends StatelessWidget {
             child: Text('Kosong'),
           ),
         ),*/
-        if (vm.listTodo.length > 1)
-          Container(
-            height: MediaQuery.of(context).size.height - 120,
-              child: ListView.builder(
-                itemCount: vm.listTodo.length,
-                itemBuilder: (ctx, i) {
-                  Doklist row = vm.listTodo[i];
-                  return ListTile(
-                    title: Text(row.noreg),
-                  );
-                },
-              ),
-          ),
       ],
     );
-  });
 }}

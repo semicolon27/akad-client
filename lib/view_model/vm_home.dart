@@ -3,27 +3,35 @@ import 'package:akad/models/doklist.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeVM extends BaseViewModel {
-  List<Doklist> data = [];
+  List<Doklist> _data = [];
+  List<Doklist> get data => _data;
+  set data(List<Doklist> v) {
+    _data = v;
+    notifyListeners();
+  }
 
   void getDataDokumen() async {
-  //Future<Doklist> getDataDokumen() async {
-    data = await readDoklist();
+    setBusyForObject(_listDokumen, true);
+    _data = await readDoklist();
+    _listDokumen = _data;
+    setBusyForObject(_listDokumen, false);
     notifyListeners();
   }
   
-  List<Doklist> _listTodo = [];
-  List<Doklist> get listTodo => _listTodo;
-  set listTodo(List<Doklist> v) {
-    _listTodo = v;
+  List<Doklist> _listDokumen = [];
+  List<Doklist> get listDokumen => _listDokumen;
+  set listDokumen(List<Doklist> v) {
+    _listDokumen = v;
     notifyListeners();
   }
 
   void init() {
-    _listTodo = data;
+    getDataDokumen();
   }
   
   void filterData(String keyword) {
-    _listTodo = data.where((element) => 
+    print(_data);
+    _listDokumen = data.where((element) => 
       element.noreg.contains(keyword)).toList();
     notifyListeners();
   }
