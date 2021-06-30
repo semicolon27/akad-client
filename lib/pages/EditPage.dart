@@ -1,4 +1,5 @@
 import 'package:akad/controller/c_detail.dart';
+import 'package:akad/view_model/vm_create.dart';
 import 'package:akad/view_model/vm_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,8 @@ class _EditDokumenState extends State<EditDokumen> {
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
-          body: ViewModelBuilder<DetailVM>.reactive(
-        viewModelBuilder: () => DetailVM(),
+          body: ViewModelBuilder<CreateVM>.reactive(
+        viewModelBuilder: () => CreateVM(),
         builder: (context, model, child) => Column(
           children: [
             Form(
@@ -42,15 +43,11 @@ class _EditDokumenState extends State<EditDokumen> {
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 16),
                         child: Container(
-                            height: 50,
-                            width: 300,
-                            child: Text("noreg")
-                            ),
+                            height: 50, width: 300, child: Text("noreg")),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: Text("nama file")
-                      ),
+                          padding: const EdgeInsets.only(top: 50),
+                          child: Text("nama file")),
                     ],
                   ),
                   Column(
@@ -65,43 +62,35 @@ class _EditDokumenState extends State<EditDokumen> {
                       Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),
                           child: Container(
-                            height: 50,
-                            width: 300,
-                            child: Text("jenis")
-                          )),
-                      Row(
-                        children:[
-                          Padding(
-                            padding: const EdgeInsets.only(top: 50, right: 15),
-                            child: ElevatedButton(
-                              //icon: Icon(Icons.edit),
-                              onPressed: () => createDokumen(
-                                  model.indexDokumen,
-                                  model.noreg.text,
-                                  model.fileBytes,
-                                  model.fileName),
-                              child: Text('Edit'),
-                              
+                              height: 50, width: 300, child: Text("jenis"))),
+                      Row(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50, right: 15),
+                          child: ElevatedButton(
+                            //icon: Icon(Icons.edit),
+                            onPressed: () => createDokumen(
+                                model.indexDokumen,
+                                model.noreg.text,
+                                model.fileBytes,
+                                model.fileName),
+                            child: Text('Edit'),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50),
+                          child: ElevatedButton(
+                            // icon: Icon(Icons.delete),
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 50),
-                            child: ElevatedButton(
-                              // icon: Icon(Icons.delete),
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.red,
-                              ),
-                              onPressed: () => createDokumen(
-                                  model.indexDokumen,
-                                  model.noreg.text,
-                                  model.fileBytes,
-                                  model.fileName),
-                              child: 
-                                Text('Delete'),
-                               
-                            ), //elevated
-                          ),
-
+                            onPressed: () => createDokumen(
+                                model.indexDokumen,
+                                model.noreg.text,
+                                model.fileBytes,
+                                model.fileName),
+                            child: Text('Delete'),
+                          ), //elevated
+                        ),
                       ]),
                     ],
                   ) // Row Baris Utama 2
@@ -121,7 +110,6 @@ class _EditDokumenState extends State<EditDokumen> {
                                   generatePDF(newFile, model.fileBytes),
                             ))
                         : Image.memory(model.fileBytes))
-            
           ],
         ),
       )),
