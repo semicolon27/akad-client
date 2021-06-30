@@ -4,6 +4,7 @@ import 'package:akad/view_model/vm_home.dart';
 import 'package:akad/pages/template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
 class Home extends StatefulWidget {
@@ -21,73 +22,88 @@ class _HomeState extends State<Home> {
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<HomeVM>.reactive(
-          viewModelBuilder: () => HomeVM(),
-          onModelReady: (vm) => vm.init(),
-          builder: (context, model, child) => Container(
+        viewModelBuilder: () => HomeVM(),
+        onModelReady: (vm) => vm.init(),
+        builder: (context, model, child) => Container(
           width: double.infinity,
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            border: Border.all(
+              border: Border.all(
             color: Colors.white,
             width: 15,
           )),
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Data Pengguna", 
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(
+                    child: Text("Data Pengguna",
                         style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      )),
-                    ),
-                    Expanded(
-                        child: SearchBox(
-                        onChanged: (value) => model.filterData(value),
-                      )),
-                  ],
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        )),
+                  ),
+                  Expanded(
+                      child: SearchBox(
+                    onChanged: (value) => model.filterData(value),
+                  )),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 400,
+                child: SingleChildScrollView(
+                  child: !model.busy(model.listDokumen)
+                      ? DataTable(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          columns: <DataColumn>[
+                            DataColumn(
+                                label: Text("No. Registrasi",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            DataColumn(
+                                label: Text("Nama",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            DataColumn(
+                                label: Text("Jenis Dokumen",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            DataColumn(
+                                label: Text("Aksi",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                          ],
+                          rows: model.listDokumen
+                              .map(
+                                (data) => DataRow(
+                                  cells: [
+                                    DataCell(Text(data.noreg)),
+                                    DataCell(Text(data.nama)),
+                                    DataCell(Text(data.jenis)),
+                                    DataCell(ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          onSurface: Colors.blue),
+                                      onPressed: () {
+                                        int idDok = data.id;
+                                        Get.toNamed('/detail/$idDok');
+                                      },
+                                      child: Text('Detail'),
+                                    )),
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : Text('Loading...'),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  height: 400,
-                  child: SingleChildScrollView(
-                            child: !model.busy(model.listDokumen) ? DataTable(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                            ),
-                            columns: <DataColumn>[
-                              DataColumn(label: Text("No. Registrasi", style: TextStyle(fontWeight: FontWeight.bold))),
-                              DataColumn(label: Text("Nama", style: TextStyle(fontWeight: FontWeight.bold))),
-                              DataColumn(label: Text("Jenis Dokumen", style: TextStyle(fontWeight: FontWeight.bold))),
-                              DataColumn(label: Text("Aksi", style: TextStyle(fontWeight: FontWeight.bold))),
-                            ],
-
-                            rows: model.listDokumen
-                                .map(
-                                  (data) => DataRow(
-                                    cells: [
-                                      DataCell(Text(data.noreg)),
-                                      DataCell(Text(data.nama)),
-                                      DataCell(Text(data.jenis)),
-                                      DataCell(ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            onSurface: Colors.blue),
-                                        onPressed: null,
-                                        child: Text('Detail'),
-                                      )),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          ) : Text('Loading...'),
-                      ),
               ),
             ],
           ),
@@ -105,10 +121,10 @@ class SearchBox extends StatelessWidget {
   }) : super(key: key);
 
   final Function(String)? onChanged;
-  
+
   @override
   Widget build(BuildContext context) {
-  return Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
@@ -148,4 +164,5 @@ class SearchBox extends StatelessWidget {
         ),*/
       ],
     );
-}}
+  }
+}
