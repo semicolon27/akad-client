@@ -1,8 +1,10 @@
 import 'package:akad/controller/c_detail.dart';
+import 'package:akad/models/dokumen.dart';
 import 'package:akad/view_model/vm_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akad/pages/template.dart';
+import 'package:get/get.dart';
 import 'package:printing/printing.dart';
 import 'package:stacked/stacked.dart';
 
@@ -19,152 +21,102 @@ class _DetailDokumenState extends State<DetailDokumen> {
   @override
   Widget build(BuildContext context) {
     return TemplateWidget(
-          child: Scaffold(
-              body: ViewModelBuilder<DetailVM>.reactive(
-                viewModelBuilder: () => DetailVM(),
-                builder: (context, model, child) => SingleChildScrollView(
-                child: Column(
+        child: Scaffold(
+      body: ViewModelBuilder<DetailVM>.reactive(
+        viewModelBuilder: () => DetailVM(),
+        builder: (context, model, child) => FutureBuilder<List<Dokumen>>(
+            // child: FutureBuilder<List<Doklist>>(
+            future: readDokumen(Get.parameters['id']),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return Container(child: Text("Loading"));
+              } else
+                return Column(
                   children: [
-                    Form(
-                      autovalidateMode: AutovalidateMode.always,
-                      key: model.formkey,
+                    Container(
                       child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [ 
-                          Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [ Padding(
-                            padding: EdgeInsets.only(top: 50),
-                            child: Text("Nomor Registrasi",
-                            style: TextStyle(fontSize: 20)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            child: Container(
-                                height: 50,
-                                width: 300,
-                                child: TextField(
-                                  controller: model.noreg,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Masukan Inputan',
-                                  ),
-                                )
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 50),
-                            child: Row(children: [
-                              ElevatedButton(
-                                  onPressed: () => model.pilihFile(),
-                                  child: Text("Upload File")
-                              ),
-                              Container(
-                                width: 210,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                padding: EdgeInsets.all(5),
-                                margin: EdgeInsets.all(5),
-                                child:
-                                 Text(model.fileName),
-                              ),
-                            ]),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 50),
-                            child: Text("Jenis Dokumen",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(fontSize: 20)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Nomor Registrasi",
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(snapshot.data!.first.noreg,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("File",
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(snapshot.data!.first.nama,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                            ],
                           ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              child: Container(
-                                height: 50,
-                                width: 300,
-                                decoration: BoxDecoration(
-                                  border:
-                                    Border.all(color: Colors.grey, width: 1),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: DropdownButton(
-                                  hint: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 16),
-                                      child: Text("Pilih Jenis Dokumen"),
-                                  ),
-                                  dropdownColor: Colors.white,
-                                  icon: Icon(Icons.arrow_drop_down),
-                                  isExpanded: true,
-                                  underline: SizedBox(),
-                                  value: model.jenis,
-                                  onChanged: (newValue) => model.pilihJenisDokumen(newValue),
-                                  items: model.jenisDokumen.map((valueItem) {
-                                    return DropdownMenuItem(
-                                      value: valueItem,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 16),
-                                        child: Text(valueItem),
-                                      ),
-                                    );
-                                  }).toList(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Jenis Dokumen",
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(snapshot.data!.first.jenis,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: Row(
+                                  children: [
+                                    ElevatedButton(
+                                      //icon: Icon(Icons.edit),
+                                      onPressed: () => {},
+                                      child: Text('Edit'),
+                                    ),
+                                    ElevatedButton(
+                                      //icon: Icon(Icons.edit),
+                                      onPressed: () => {},
+                                      child: Text('Hapus'),
+                                    ),
+                                  ],
                                 ),
                               )
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 50),
-                            child: ElevatedButton(
-                                  onPressed: () => createDokumen(
-                                      model.indexDokumen,
-                                      model.noreg.text,
-                                      model.fileBytes,
-                                      model.fileName),
-                                  child: Text('Tambah'),
-                                  
-                                ),
-                          )
+                            ],
+                          ) // Row Baris Utama 2
                         ],
-                      ) 
-                  ],
-                  ),
-                ),
-                Container(
-                    child: (model.fileBytes == null)
-                        ? Text(" ")
-                        : (model.fileExtension == 'pdf')
+                      ),
+                    ),
+                    Container(
+                        child: (snapshot.data!.first.extension == 'pdf')
                             ? Container(
                                 width: 650,
                                 height: 400,
-                                margin: const EdgeInsetsDirectional.all(20),
-                                child: 
-                                PdfPreview(
-                                  build: (newFile) =>
-                                      generatePDF(newFile, model.fileBytes),
-                                )
-                              )
+                                margin: const EdgeInsetsDirectional.all(25),
+                                child: PdfPreview(
+                                  build: (newFile) => generatePDF(
+                                      newFile, snapshot.data!.first.file),
+                                ))
                             : Container(
                                 width: 650,
                                 height: 350,
-                                margin: const EdgeInsetsDirectional.all(20),
-                                child:
-                                  Image.memory(model.fileBytes)
-                              )
-                )
-              ],
-                ),
-                )
-              )
-          ),
-    );
+                                margin: const EdgeInsetsDirectional.all(25),
+                                child: Image.memory(snapshot.data!.first.file)))
+                    // buatpreview
+                  ],
+                );
+            }),
+      ),
+    ));
   }
 }
