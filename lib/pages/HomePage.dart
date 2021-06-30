@@ -155,13 +155,13 @@ class SearchBox extends StatelessWidget {
         ),
 
         //Proses filter data
-        if (vm.listTodo.length == 0)
+        /*if (vm.listTodo.length == 0)
           Center(
             child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text('Kosong'),
           ),
-        ),
+        ),*/
         if (vm.listTodo.length > 1)
           Container(
             height: MediaQuery.of(context).size.height - 120,
