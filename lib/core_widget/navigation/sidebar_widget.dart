@@ -3,7 +3,6 @@ import 'package:stacked/stacked.dart';
 import 'package:akad/core_utilitas/utility_ui.dart';
 import 'package:akad/core_widget/navigation/sidebar_item_widget.dart';
 import 'package:akad/core_widget/navigation/sidebar_route_list.dart';
-import 'package:akad/models/sidebar_item.dart';
 import 'package:akad/view_model/vm_sidebar.dart';
 import 'package:akad/view_model/vm_template.dart';
 

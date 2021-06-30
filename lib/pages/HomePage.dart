@@ -1,11 +1,9 @@
-import 'package:akad/constant.dart';
 import 'package:akad/controller/c_detail.dart';
 import 'package:akad/models/doklist.dart';
 import 'package:akad/view_model/vm_home.dart';
 import 'package:akad/pages/template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
 class Home extends StatefulWidget {
@@ -79,7 +77,6 @@ class _HomeState extends State<Home> {
                             rows: snapshot.data!
                                 .map(
                                   (data) => DataRow(
-                                    
                                     cells: [
                                       DataCell(Text(data.noreg)),
                                       DataCell(Text(data.nama)),
@@ -156,6 +153,28 @@ class SearchBox extends StatelessWidget {
             ),
           ),
         ),
+
+        //Proses filter data
+        if (vm.listTodo.length == 0)
+          Center(
+            child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text('Kosong'),
+          ),
+        ),
+        if (vm.listTodo.length > 1)
+          Container(
+            height: MediaQuery.of(context).size.height - 120,
+              child: ListView.builder(
+                itemCount: vm.listTodo.length,
+                itemBuilder: (ctx, i) {
+                  Doklist row = vm.listTodo[i];
+                  return ListTile(
+                    title: Text(row.noreg),
+                  );
+                },
+              ),
+          ),
       ],
     );
   });
