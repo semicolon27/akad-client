@@ -96,6 +96,7 @@ BoxDecoration mutasiCardDecoration = BoxDecoration(
 );
 
 // Text / font styling
+// ignore: must_be_immutable
 class MainTextStyle extends TextStyle {
   static const bool fontScaling = false;
   static const double letterSpace = 0.5;

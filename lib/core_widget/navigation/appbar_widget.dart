@@ -41,7 +41,7 @@ SliverAppBar sliverAppBarW() {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Nikita Khrushchev',
+                    'Dashboard Admin',
                     style: textStyle.textStyleSubtitle1.copyWith(
                       fontFamily: "Nunito",
                       fontWeight: FontWeight.w600,

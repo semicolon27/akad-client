@@ -19,7 +19,6 @@ class EditDokumen extends StatefulWidget {
 class _EditDokumenState extends State<EditDokumen> {
   @override
   Widget build(BuildContext context) {
-    // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<CreateVM>.reactive(
@@ -93,7 +92,7 @@ class _EditDokumenState extends State<EditDokumen> {
                         ),
                       ]),
                     ],
-                  ) // Row Baris Utama 2
+                  ) // 
                 ],
               ),
             ),
@@ -104,15 +103,24 @@ class _EditDokumenState extends State<EditDokumen> {
                         ? Container(
                             width: 500,
                             height: 350,
-                            margin: const EdgeInsetsDirectional.all(5),
+                            margin: const EdgeInsetsDirectional.all(20),
                             child: PdfPreview(
                               build: (newFile) =>
                                   generatePDF(newFile, model.fileBytes),
                             ))
-                        : Image.memory(model.fileBytes))
-          ],
-        ),
-      )),
+                        : Container(
+                            width: 650,
+                            height: 350,
+                            margin: const EdgeInsetsDirectional.all(20),
+                            child:
+                              Image.memory(model.fileBytes)
+                          )
+            )
+            ],
+          ),
+          )
+        )
+      ),
     );
   }
 }

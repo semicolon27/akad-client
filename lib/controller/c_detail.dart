@@ -14,7 +14,7 @@ Future<Dokumen> createDokumen(
     "noreg": noreg,
     "jenis": jenis,
     "nama": filename,
-    'file': await MultipartFile.fromBytes(file, filename: filename),
+    'file': MultipartFile.fromBytes(file, filename: filename),
   });
   Response responses = await dio.post('http://127.0.0.1:8000/', data: formData);
   if (responses.statusCode == 201) {

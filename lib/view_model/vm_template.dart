@@ -1,8 +1,5 @@
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+
 import 'package:stacked/stacked.dart';
-import 'package:akad/core_widget/navigation/navigation_widget.dart';
 
 class TemplateVM extends BaseViewModel {
   bool _isExtended = false;

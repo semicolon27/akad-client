@@ -20,7 +20,6 @@ class DetailDokumen extends StatefulWidget {
 class _DetailDokumenState extends State<DetailDokumen> {
   @override
   Widget build(BuildContext context) {
-    // cuma perlu di bungkus saja
     return TemplateWidget(
         child: Scaffold(
       body: ViewModelBuilder<DetailVM>.reactive(
