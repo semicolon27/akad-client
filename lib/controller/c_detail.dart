@@ -12,7 +12,7 @@ Future<Dokumen> createDokumen(
   Dio dio = Dio();
   var formData = FormData.fromMap({
     "noreg": noreg,
-    "jenis": 1,
+    "jenis": jenis,
     "nama": filename,
     'file': MultipartFile.fromBytes(file, filename: filename),
   });
@@ -24,6 +24,16 @@ Future<Dokumen> createDokumen(
   }
 }
 
+Future<List<Dokumen>> readDokumen(String? id) async {
+  String url = "http://127.0.0.1:8000/getbyid/$id";
+  var response = await http.get(Uri.parse(url));
+  var jsonObject = jsonDecode(response.body);
+  List<Dokumen> isi = [];
+
+  isi.add(Dokumen.getDokumen(jsonObject));
+  return isi;
+}
+
 Future<List<Doklist>> readDoklist() async {
   String url = "http://127.0.0.1:8000/";
   var response = await http.get(Uri.parse(url));
@@ -33,6 +43,7 @@ Future<List<Doklist>> readDoklist() async {
   for (int i = 0; i < jsonObject.length; i++) {
     isi.add(Doklist.getDoklist(jsonObject[i]));
   }
+  print(isi);
   return (isi);
 }
 

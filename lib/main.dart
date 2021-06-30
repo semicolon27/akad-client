@@ -1,3 +1,4 @@
+import 'package:akad/pages/CreateDokPage.dart';
 import 'package:akad/pages/EditPage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,13 +35,14 @@ class MyApp extends StatelessWidget {
           getPages: [
             GetPage(name: '/login', page: () => LoginPage()),
             GetPage(name: '/home', page: () => Home()),
-            GetPage(name: '/detail', page: () => DetailDokumen()),
+            GetPage(name: '/tambah', page: () => CreateDokumen()),
+            GetPage(name: '/detail/:id', page: () => DetailDokumen()),
             GetPage(name: '/edit', page: () => EditDokumen()),
           ],
 
           // route yang di load pertama kali
           // Nanti kalau login nya dah jadi, ganti jadi /login
-          initialRoute: '/detail',
+          initialRoute: '/home',
         );
       },
     );
