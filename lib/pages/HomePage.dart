@@ -123,6 +123,10 @@ class SearchBox extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+  return ViewModelBuilder<HomeVM>.reactive(
+    viewModelBuilder: () => HomeVM(),
+    onModelReady: (vm) => vm.init(),
+    builder: (context, vm, _) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
@@ -138,8 +142,10 @@ class SearchBox extends StatelessWidget {
             color: Colors.blue.withOpacity(0.4),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: TextField(
-            onChanged: onChanged,
+          //Kolom Search : filter data
+          child: TextFormField(
+            //onChanged: onChanged,
+            onChanged: (v) => vm.filterData(v),
             style: TextStyle(color: Colors.white),
             decoration: InputDecoration(
               enabledBorder: InputBorder.none,
@@ -152,5 +158,5 @@ class SearchBox extends StatelessWidget {
         ),
       ],
     );
-  }
-}
+  });
+}}
