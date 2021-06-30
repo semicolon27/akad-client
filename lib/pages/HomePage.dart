@@ -24,15 +24,15 @@ class _HomeState extends State<Home> {
     return TemplateWidget(
       child: Scaffold(
           body: ViewModelBuilder<HomeVM>.reactive(
-          viewModelBuilder: () => HomeVM(),
-          builder: (context, model, child) => Container(
+        viewModelBuilder: () => HomeVM(),
+        builder: (context, model, child) => Container(
           width: double.infinity,
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             border: Border.all(
-            color: Colors.white,
-            width: 15,
-          ),
+              color: Colors.white,
+              width: 15,
+            ),
             borderRadius: const BorderRadius.all(Radius.circular(30)),
           ),
           child: Column(
@@ -41,16 +41,15 @@ class _HomeState extends State<Home> {
               Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      "Data Pengguna", 
-                      style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
-                    )),
+                    child: Text("Data Pengguna",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        )),
                   ),
                   Expanded(
-                    child: SearchBox(
+                      child: SearchBox(
                     onChanged: (value) {},
                   )),
                 ],
@@ -66,9 +65,7 @@ class _HomeState extends State<Home> {
                       return Container(child: Text("Loading"));
                     } else
                       return DataTable(
-
-                        decoration: BoxDecoration(
-                        ),
+                        decoration: BoxDecoration(),
                         columns: <DataColumn>[
                           DataColumn(label: Text("No. Registrasi")),
                           DataColumn(label: Text("Nama")),
@@ -80,7 +77,6 @@ class _HomeState extends State<Home> {
                         rows: snapshot.data!
                             .map(
                               (data) => DataRow(
-                                
                                 cells: [
                                   DataCell(Text(data.noreg)),
                                   DataCell(Text(data.nama)),
@@ -88,7 +84,10 @@ class _HomeState extends State<Home> {
                                   DataCell(ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         onSurface: Colors.blue[600]),
-                                    onPressed: null,
+                                    onPressed: () {
+                                      int idDok = data.id;
+                                      Get.toNamed('/detail/$idDok');
+                                    },
                                     child: Text('Detail'),
                                   )),
                                 ],
@@ -96,11 +95,6 @@ class _HomeState extends State<Home> {
                             )
                             .toList(),
                       );
-                    // return ListTile(
-                    //   title: Text(snapshot.data![i].nama),
-                    //   subtitle: Text(snapshot.data![i].noreg),
-                    // );
-                    // });
                   },
                 ),
               ),
@@ -120,7 +114,7 @@ class SearchBox extends StatelessWidget {
   }) : super(key: key);
 
   final ValueChanged onChanged;
-  
+
   @override
   Widget build(BuildContext context) {
     return Row(
