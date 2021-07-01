@@ -1,4 +1,4 @@
-import 'package:akad/controller/c_detail.dart';
+import 'package:akad/controller/c_Dokumen.dart';
 import 'package:akad/models/doklist.dart';
 import 'package:akad/view_model/vm_home.dart';
 import 'package:akad/pages/template.dart';

@@ -1,4 +1,4 @@
-import 'package:akad/controller/c_detail.dart';
+import 'package:akad/controller/c_Dokumen.dart';
 import 'package:akad/models/doklist.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,7 +17,7 @@ class HomeVM extends BaseViewModel {
     setBusyForObject(_listDokumen, false);
     notifyListeners();
   }
-  
+
   List<Doklist> _listDokumen = [];
   List<Doklist> get listDokumen => _listDokumen;
   set listDokumen(List<Doklist> v) {
@@ -28,11 +28,11 @@ class HomeVM extends BaseViewModel {
   void init() {
     getDataDokumen();
   }
-  
+
   void filterData(String keyword) {
     print(_data);
-    _listDokumen = data.where((element) => 
-      element.noreg.contains(keyword)).toList();
+    _listDokumen =
+        data.where((element) => element.noreg.contains(keyword)).toList();
     notifyListeners();
   }
 }

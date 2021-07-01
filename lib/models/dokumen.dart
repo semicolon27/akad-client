@@ -46,12 +46,7 @@ class Dokumen {
           file: decodedBytes);
     } catch (e) {
       print(e);
-      return Dokumen(
-          id: x['Dokumen']['id'],
-          nama: x['Dokumen']['nama'],
-          noreg: x['Dokumen']['noreg'],
-          jenis: x['singkatan'],
-          file: "fail");
+      throw Exception('Gagal Melihat Dokumen');
     }
   }
 

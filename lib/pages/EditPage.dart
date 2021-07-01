@@ -1,4 +1,4 @@
-import 'package:akad/controller/c_detail.dart';
+import 'package:akad/controller/c_Dokumen.dart';
 import 'package:akad/view_model/vm_create.dart';
 import 'package:akad/view_model/vm_detail.dart';
 import 'package:flutter/material.dart';

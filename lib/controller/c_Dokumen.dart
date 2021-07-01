@@ -34,6 +34,17 @@ Future<List<Dokumen>> readDokumen(String? id) async {
   return isi;
 }
 
+Future<Dokumen> deleteDokumen(String? id) async {
+  String url = "http://127.0.0.1:8000/$id";
+  var responses = await http.delete(Uri.parse(url));
+  var jsonObject = jsonDecode(responses.body);
+  if (responses.statusCode == 201) {
+    return Dokumen.fromJson(jsonDecode(jsonObject));
+  } else {
+    throw Exception('Gagal menghapus dokumen');
+  }
+}
+
 Future<List<Doklist>> readDoklist() async {
   String url = "http://127.0.0.1:8000/";
   var response = await http.get(Uri.parse(url));
