@@ -134,7 +134,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                             model.noreg.text,
                                             model.fileBytes,
                                             model.fileName);
-                                        Get.toNamed('/home');
+                                        Get.offAllNamed('/home');
                                       },
                                       child: Text('Tambah'),
                                     ),
