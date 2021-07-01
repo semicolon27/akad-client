@@ -32,7 +32,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                 return Container(child: Text("Loading"));
               } else
                 return SingleChildScrollView(
-                    child: Column(
+                  child: Column(
                     children: [
                       Container(
                         child: Row(
@@ -79,19 +79,23 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 50),
                                   child: Row(
-                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       ElevatedButton(
                                         onPressed: () => {},
                                         child: Text('Edit'),
                                       ),
                                       Padding(padding: EdgeInsets.all(5)),
-                                      
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           primary: Colors.red,
                                         ),
-                                        onPressed: () => {},
+                                        onPressed: () {
+                                          deleteDokumen(
+                                              Get.arguments.toString());
+                                          Get.offAllNamed('/home');
+                                        },
                                         child: Text('Hapus'),
                                       ),
                                     ],
@@ -116,7 +120,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                   width: 650,
                                   height: 350,
                                   margin: const EdgeInsetsDirectional.all(25),
-                                  child: Image.memory(snapshot.data!.first.file)))
+                                  child:
+                                      Image.memory(snapshot.data!.first.file)))
                       // buatpreview
                     ],
                   ),
