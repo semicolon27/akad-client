@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io' as Io;
 
 class Dokumen {
-  final int id;
-  final String nama;
-  final String noreg;
-  final jenis;
-  final file;
-  final String? extension;
+  int id;
+  String nama;
+  String noreg;
+  var jenis;
+  var file;
+  String? extension;
 
   Dokumen(
       {required this.id,
