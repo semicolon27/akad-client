@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: '/home', page: () => Home()),
             GetPage(name: '/tambah', page: () => CreateDokumen()),
             GetPage(name: '/detail/:id', page: () => DetailDokumen()),
-            GetPage(name: '/edit', page: () => EditDokumen()),
+            GetPage(name: '/edit/:id', page: () => UpdateDokumen()),
           ],
 
           // route yang di load pertama kali

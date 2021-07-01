@@ -92,8 +92,7 @@ class _HomeState extends State<Home> {
                                       style: ElevatedButton.styleFrom(
                                           onSurface: Colors.blue),
                                       onPressed: () {
-                                        int idDok = data.id;
-                                        Get.toNamed('/detail/$idDok');
+                                        Get.toNamed('/detail/${data.id}');
                                       },
                                       child: Text('Detail'),
                                     )),
