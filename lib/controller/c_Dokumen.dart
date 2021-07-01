@@ -59,7 +59,7 @@ Future<List<Doklist>> readDoklist() async {
 }
 
 Future<Uint8List> generatePDF(PdfPageFormat format, var filepdf) async {
-  await Printing.layoutPdf(onLayout: (_) => filepdf);
+  // await Printing.layoutPdf(onLayout: (_) => filepdf);
 
   return filepdf;
 }
