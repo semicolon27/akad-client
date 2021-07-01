@@ -130,19 +130,12 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                 padding: const EdgeInsets.only(top: 50),
                                 child: ElevatedButton(
                                   //icon: Icon(Icons.edit),
-                                  onPressed: () => (model.status == "tambah")
-                                      ? createDokumen(
-                                          model.indexDokumen,
-                                          model.noreg.text,
-                                          model.data.first.file,
-                                          model.data.first.nama)
-                                      : print("""i: ${model.indexDokumen},
-                                          n: ${model.noreg.text},
-                                          b: ${model.data.first.file},
-                                          f: ${model.data.first.nama}"""),
-                                  child: (model.status == "tambah")
-                                      ? Text('Tambah')
-                                      : Text('Edit'),
+                                  onPressed: () => createDokumen(
+                                      model.indexDokumen,
+                                      model.noreg.text,
+                                      model.data.first.file,
+                                      model.data.first.nama),
+                                  child: Text('Edit'),
                                 ),
                               )
                             ],
