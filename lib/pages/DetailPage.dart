@@ -23,15 +23,10 @@ class _DetailDokumenState extends State<DetailDokumen> {
     return TemplateWidget(
         child: Scaffold(
       body: ViewModelBuilder<DetailVM>.reactive(
-        viewModelBuilder: () => DetailVM(),
-        builder: (context, model, child) => FutureBuilder<List<Dokumen>>(
-            // child: FutureBuilder<List<Doklist>>(
-            future: readDokumen(Get.parameters['id']),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Container(child: Text("Loading"));
-              } else
-                return SingleChildScrollView(
+          viewModelBuilder: () => DetailVM(),
+          onModelReady: (vm) => vm.init(Get.parameters['id'].toString()),
+          builder: (context, model, child) => !model.busy(model.data)
+              ? SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
@@ -48,7 +43,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(snapshot.data!.first.noreg,
+                                  child: Text(model.data.first.noreg,
                                       style: TextStyle(fontSize: 20)),
                                 ),
                                 Padding(
@@ -58,7 +53,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(snapshot.data!.first.nama,
+                                  child: Text(model.data.first.nama,
                                       style: TextStyle(fontSize: 20)),
                                 ),
                               ],
@@ -73,7 +68,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(snapshot.data!.first.jenis,
+                                  child: Text(model.data.first.jenis,
                                       style: TextStyle(fontSize: 20)),
                                 ),
                                 Padding(
@@ -83,7 +78,10 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       ElevatedButton(
-                                        onPressed: () => {},
+                                        onPressed: () => {
+                                          Get.toNamed(
+                                              '/edit/${Get.parameters['id'].toString()}')
+                                        },
                                         child: Text('Edit'),
                                       ),
                                       Padding(padding: EdgeInsets.all(5)),
@@ -93,7 +91,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                         ),
                                         onPressed: () {
                                           deleteDokumen(
-                                              Get.arguments.toString());
+                                              Get.parameters['id'].toString());
                                           Get.offAllNamed('/home');
                                         },
                                         child: Text('Hapus'),
@@ -107,27 +105,25 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         ),
                       ),
                       Container(
-                          child: (snapshot.data!.first.extension == 'pdf')
+                          child: (model.data.first.extension == 'pdf')
                               ? Container(
                                   width: 650,
                                   height: 400,
                                   margin: const EdgeInsetsDirectional.all(25),
                                   child: PdfPreview(
                                     build: (newFile) => generatePDF(
-                                        newFile, snapshot.data!.first.file),
+                                        newFile, model.data.first.file),
                                   ))
                               : Container(
                                   width: 650,
                                   height: 350,
                                   margin: const EdgeInsetsDirectional.all(25),
-                                  child:
-                                      Image.memory(snapshot.data!.first.file)))
+                                  child: Image.memory(model.data.first.file)))
                       // buatpreview
                     ],
                   ),
-                );
-            }),
-      ),
+                )
+              : Text("loading...")),
     ));
   }
 }
