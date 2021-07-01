@@ -34,6 +34,24 @@ Future<List<Dokumen>> readDokumen(String? id) async {
   return isi;
 }
 
+Future<Dokumen> updateDokumen(
+    String id, int jenis, String noreg, var file, String filename) async {
+  Dio dio = Dio();
+  var formData = FormData.fromMap({
+    "noreg": noreg,
+    "jenis": jenis,
+    "nama": filename,
+    'file': MultipartFile.fromBytes(file, filename: filename),
+  });
+  Response responses =
+      await dio.put('http://127.0.0.1:8000/$id', data: formData);
+  if (responses.statusCode == 201) {
+    return Dokumen.fromJson(jsonDecode(responses.data));
+  } else {
+    throw Exception('Gagal membuat dokumen');
+  }
+}
+
 Future<Dokumen> deleteDokumen(String? id) async {
   String url = "http://127.0.0.1:8000/$id";
   var responses = await http.delete(Uri.parse(url));
