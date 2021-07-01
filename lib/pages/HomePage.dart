@@ -153,7 +153,6 @@ class SearchBox extends StatelessWidget {
             ),
           ),
         ),
-
         //Proses filter data
         /*if (vm.listTodo.length == 0)
           Center(

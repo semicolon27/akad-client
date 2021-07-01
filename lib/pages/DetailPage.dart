@@ -31,89 +31,95 @@ class _DetailDokumenState extends State<DetailDokumen> {
               if (snapshot.data == null) {
                 return Container(child: Text("Loading"));
               } else
-                return Column(
-                  children: [
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 50),
-                                child: Text("Nomor Registrasi",
-                                    style: TextStyle(fontSize: 15)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(snapshot.data!.first.noreg,
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 50),
-                                child: Text("File",
-                                    style: TextStyle(fontSize: 15)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(snapshot.data!.first.nama,
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: 50),
-                                child: Text("Jenis Dokumen",
-                                    style: TextStyle(fontSize: 15)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(snapshot.data!.first.jenis,
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      //icon: Icon(Icons.edit),
-                                      onPressed: () => {},
-                                      child: Text('Edit'),
-                                    ),
-                                    ElevatedButton(
-                                      //icon: Icon(Icons.edit),
-                                      onPressed: () => {},
-                                      child: Text('Hapus'),
-                                    ),
-                                  ],
+                return SingleChildScrollView(
+                    child: Column(
+                    children: [
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 50),
+                                  child: Text("Nomor Registrasi",
+                                      style: TextStyle(fontSize: 15)),
                                 ),
-                              )
-                            ],
-                          ) // Row Baris Utama 2
-                        ],
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(snapshot.data!.first.noreg,
+                                      style: TextStyle(fontSize: 20)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 50),
+                                  child: Text("File",
+                                      style: TextStyle(fontSize: 15)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(snapshot.data!.first.nama,
+                                      style: TextStyle(fontSize: 20)),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 50),
+                                  child: Text("Jenis Dokumen",
+                                      style: TextStyle(fontSize: 15)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(snapshot.data!.first.jenis,
+                                      style: TextStyle(fontSize: 20)),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 50),
+                                  child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () => {},
+                                        child: Text('Edit'),
+                                      ),
+                                      Padding(padding: EdgeInsets.all(5)),
+                                      
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.red,
+                                        ),
+                                        onPressed: () => {},
+                                        child: Text('Hapus'),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ) // Row Baris Utama 2
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                        child: (snapshot.data!.first.extension == 'pdf')
-                            ? Container(
-                                width: 650,
-                                height: 400,
-                                margin: const EdgeInsetsDirectional.all(25),
-                                child: PdfPreview(
-                                  build: (newFile) => generatePDF(
-                                      newFile, snapshot.data!.first.file),
-                                ))
-                            : Container(
-                                width: 650,
-                                height: 350,
-                                margin: const EdgeInsetsDirectional.all(25),
-                                child: Image.memory(snapshot.data!.first.file)))
-                    // buatpreview
-                  ],
+                      Container(
+                          child: (snapshot.data!.first.extension == 'pdf')
+                              ? Container(
+                                  width: 650,
+                                  height: 400,
+                                  margin: const EdgeInsetsDirectional.all(25),
+                                  child: PdfPreview(
+                                    build: (newFile) => generatePDF(
+                                        newFile, snapshot.data!.first.file),
+                                  ))
+                              : Container(
+                                  width: 650,
+                                  height: 350,
+                                  margin: const EdgeInsetsDirectional.all(25),
+                                  child: Image.memory(snapshot.data!.first.file)))
+                      // buatpreview
+                    ],
+                  ),
                 );
             }),
       ),
