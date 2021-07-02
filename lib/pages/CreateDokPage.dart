@@ -46,13 +46,22 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                     child: Container(
                                         height: 50,
                                         width: 300,
-                                        child: TextField(
+                                        child: TextFormField(
                                           controller: model.noreg,
                                           decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
+                                            
                                             hintText: 'Masukan Inputan',
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.all(10),
                                           ),
-                                        )),
+                                          validator: (value) {
+                                            if(value == null || value.isEmpty){
+                                              return 'Please enter field';
+                                            }
+                                            return null; 
+                                          },
+                                        )
+                                        ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
@@ -87,48 +96,41 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 16),
+                                      padding: EdgeInsets.symmetric(vertical: 16),
                                       child: Container(
                                         height: 50,
                                         width: 300,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: Colors.grey, width: 1)),
-                                        child: DropdownButton(
-                                          hint: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 16),
-                                            child: Text("Pilih Jenis Dokumen"),
+                                        child: DropdownButtonFormField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
                                           ),
-                                          dropdownColor: Colors.white,
+                                          hint: Padding(padding: EdgeInsets.symmetric(horizontal:5),
+                                            child: Text("Pilih Jenis Dokumen", style: TextStyle(fontSize: 16) )
+                                          ),
                                           icon: Icon(Icons.arrow_drop_down),
                                           isExpanded: true,
-                                          underline: SizedBox(),
+                                          onChanged: (Value) async {
+                                             setState(() { model.jenis = Value; });
+                                          },
                                           value: model.jenis,
-                                          onChanged: (newValue) =>
-                                              model.pilihJenisDokumen(newValue),
                                           items: model.jenisDokumen
-                                              .map((valueItem) {
+                                          .map((valueItem){
                                             return DropdownMenuItem(
                                               value: valueItem,
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 16),
-                                                child: Text(valueItem),
-                                              ),
+                                                padding:EdgeInsets.symmetric(horizontal:5),
+                                                child: Text(valueItem)),
                                             );
                                           }).toList(),
+                                          validator: (value) => value == null
+                                            ? 'Please choose an option' : null,
                                         ),
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ElevatedButton(
-                                      //icon: Icon(Icons.edit),
                                       onPressed: () {
+                                        
                                         createDokumen(
                                             model.indexDokumen,
                                             model.noreg.text,
