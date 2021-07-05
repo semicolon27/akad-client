@@ -26,6 +26,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
       child: Scaffold(
           body: ViewModelBuilder<CreateVM>.reactive(
               viewModelBuilder: () => CreateVM(),
+              onModelReady: (vm) => vm.init(),
               builder: (context, model, child) => SingleChildScrollView(
                     child: Column(
                       children: [
@@ -50,6 +51,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         width: 300,
                                         child: TextFormField(
                                           controller: model.noreg,
+                                          // onChanged: (String val) {
+                                          //   model.setNoregField(val);
+                                          // },
                                           decoration: InputDecoration(
                                             hintText: 'Masukan Inputan',
                                             border: OutlineInputBorder(),
@@ -133,6 +137,15 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ElevatedButton(
+                                      //icon: Icon(Icons.edit),
+                                      // onPressed: (model.validate)
+                                      //     ? () {
+                                      //         print("true");
+
+                                      //       }
+                                      //     : () {
+                                      //         print("false");
+                                      //       },
                                       onPressed: () {
                                         // if (model.formkey.currentState!.validate()) {
                                         //   //form is valid, proceed further
@@ -157,6 +170,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         //     model.fileName);
                                         // Get.offAllNamed('/home');
                                       },
+
                                       child: Text('Tambah'),
                                     ),
                                   )

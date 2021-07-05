@@ -1,22 +1,17 @@
 import 'package:akad/controller/c_Dokumen.dart';
+import 'package:akad/controller/c_JenisDokumen.dart';
 import 'package:akad/models/dokumen.dart';
+import 'package:akad/models/jenisDokumen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 class UpdateVM extends BaseViewModel {
   GlobalKey formkey = GlobalKey();
   final TextEditingController noreg = TextEditingController();
-  var status;
   var indexDokumen;
 
-  List jenisDokumen = [
-    "KTP",
-    "Kartu Keluarga",
-    "SIM",
-  ];
+  List jenisDokumen = ["Kartu"];
 
   void pilihFile() async {
     var picked = await FilePicker.platform.pickFiles(
@@ -32,8 +27,11 @@ class UpdateVM extends BaseViewModel {
   }
 
   void pilihJenisDokumen(var newValue) {
-    _data.first.jenis = newValue;
-    indexDokumen = jenisDokumen.indexOf(_data.first.jenis) + 1;
+    for (int i = 0; i < _jenis.length; i++) {
+      if (_jenis[i].singkatan == newValue) {
+        indexDokumen = _jenis[i].id;
+      }
+    }
     notifyListeners();
   }
 
@@ -44,22 +42,44 @@ class UpdateVM extends BaseViewModel {
     notifyListeners();
   }
 
+  List<Dokumen> _oldData = [];
+  List<Dokumen> get listDokumen => _oldData;
+  set listDokumen(List<Dokumen> v) {
+    _oldData = v;
+    notifyListeners();
+  }
+
   void getDokumen(String id) async {
     // setStatus("edit");
     setBusyForObject(_data, true);
     _data = await readDokumen(id);
+    _oldData = _data;
     noreg.text = _data.first.noreg;
     pilihJenisDokumen(_data.first.jenis);
     setBusyForObject(_data, false);
     notifyListeners();
   }
 
-  // void setStatus(String value) {
-  //   status = value;
-  //   notifyListeners();
-  // }
+  List<JenisDokumen> _jenis = [];
+  List<JenisDokumen> get jenis => _jenis;
+  set jenis(List<JenisDokumen> v) {
+    _jenis = v;
+    notifyListeners();
+  }
 
-  void init(String? id) {
-    getDokumen(id!);
+  void getJenisDokumen() async {
+    setBusyForObject(_jenis, true);
+    _jenis = await readJenisDokumen();
+    jenisDokumen.clear();
+    for (int i = 0; i < _jenis.length; i++) {
+      jenisDokumen.add(_jenis[i].singkatan);
+    }
+    setBusyForObject(_jenis, false);
+    notifyListeners();
+  }
+
+  void init(String id) {
+    getJenisDokumen();
+    getDokumen(id);
   }
 }
