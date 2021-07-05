@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class CreateVM extends BaseViewModel {
-  GlobalKey formkey = GlobalKey();
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final TextEditingController noreg = TextEditingController();
   var fileBytes;
   var fileExtension;

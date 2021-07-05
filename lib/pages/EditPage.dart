@@ -142,6 +142,15 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                   },
                                   child: Text('Edit'),
                                 ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text('Cancel'),
+                                ),
                               )
                             ],
                           ) // Row Baris Utama 2

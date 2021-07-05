@@ -17,10 +17,33 @@ class CreateDokumen extends StatefulWidget {
 }
 
 class _CreateDokumenState extends State<CreateDokumen> {
-
+  
 
   @override
   Widget build(BuildContext context) {
+
+    void showAlert(String message){
+      AlertDialog alert = AlertDialog(
+      title: Text("Data Tidak Lengkap"),
+      content: Text(message),
+      actions: [
+        ElevatedButton(
+          onPressed: () => Get.back(),
+          child: Text("ok"),
+        ),
+      ],
+    );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+          },
+        );
+    }
+    
+     
+
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
@@ -30,7 +53,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
               builder: (context, model, child) => SingleChildScrollView(
                     child: Column(
                       children: [
-                        Form(
+                        Form( 
                           autovalidateMode: AutovalidateMode.always,
                           key: model.formkey,
                           child: Row(
@@ -47,7 +70,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 16),
                                     child: Container(
-                                        height: 50,
+                                        //height: 50,
                                         width: 300,
                                         child: TextFormField(
                                           controller: model.noreg,
@@ -61,9 +84,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           ),
                                           validator: (value) {
                                             if(value == null || value.isEmpty){
-                                              return 'Please enter field';
+                                              //return '';
                                             }
-                                            return null; 
+                                            //return null; 
                                           },
                                         )
                                         ),
@@ -73,7 +96,8 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                     child: Row(children: [
                                       ElevatedButton(
                                           onPressed: () => model.pilihFile(),
-                                          child: Text("Upload file")),
+                                          child: Text("Upload file"),
+                                          ),
                                       Container(
                                         // height: 0,
                                         width: 195,
@@ -103,7 +127,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   Padding(
                                       padding: EdgeInsets.symmetric(vertical: 16),
                                       child: Container(
-                                        height: 50,
+                                        //height: 50,
                                         width: 300,
                                         child: DropdownButtonFormField(
                                           decoration: InputDecoration(
@@ -117,8 +141,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           ),
                                           icon: Icon(Icons.arrow_drop_down),
                                           isExpanded: true,
-                                          onChanged: (Value) async {
-                                             setState(() { model.jenis = Value; });
+                                          onChanged: (newValue) {
+                                            model.pilihJenisDokumen(newValue);
+                                            // model.jenis = Value; 
                                           },
                                           value: model.jenis,
                                           items: model.jenisDokumen
@@ -130,45 +155,44 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                                 child: Text(valueItem)),
                                             );
                                           }).toList(),
-                                          validator: (valueItem) => valueItem == null
-                                            ? 'Please choose an option' : null,
+                                          // validator: (valueItem) => valueItem == null
+                                          //   ? '' 
+                                          //   : '',
+                                           validator: (valueItem) {
+                                            if(valueItem == null){
+                                              //return '';
+                                            }
+                                            //return null; 
+                                          },
                                         ),
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ElevatedButton(
-                                      //icon: Icon(Icons.edit),
-                                      // onPressed: (model.validate)
-                                      //     ? () {
-                                      //         print("true");
-
-                                      //       }
-                                      //     : () {
-                                      //         print("false");
-                                      //       },
                                       onPressed: () {
-                                        // if (model.formkey.currentState!.validate()) {
-                                        //   //form is valid, proceed further
-                                        //   //model.formkey.currentState.save();//save once fields are valid, onSaved method invoked for every form fields
-                                        // } else {
-                                        //   // setState(() {
-                                        //   //   _autovalidate = true; //enable realtime validation
-                                        //   // });
+                                        if (model.fileBytes != null && !model.noreg.text.isEmpty && model.indexDokumen != null){
+                                          print(model.noreg.text);
                                           createDokumen(
                                             model.indexDokumen,
                                             model.noreg.text,
                                             model.fileBytes,
-                                            model.fileName
-                                          );
-                                          Get.offAllNamed('/home');
-                                        //}
-
-                                        // createDokumen(
-                                        //     model.indexDokumen,
-                                        //     model.noreg.text,
-                                        //     model.fileBytes,
-                                        //     model.fileName);
-                                        // Get.offAllNamed('/home');
+                                            model.fileName);
+                                            Get.offAllNamed('/home');
+                                        }else{
+                                          String msg = '';
+                                          if(model.fileBytes == null){
+                                            msg = msg + "File Belum dipilih\n";
+                                          }
+                                          if(model.noreg.text.isEmpty){
+                                            msg = msg + "Nomor Registrasi belum dimasukkan\n";
+                                          }
+                                          if(model.indexDokumen == null){
+                                            msg = msg + "Jenis Dokumen belum dipilih";
+                                          }
+                                            showAlert(msg);
+                                          
+                                          }
+                                        // }
                                       },
 
                                       child: Text('Tambah'),
