@@ -17,6 +17,8 @@ class CreateDokumen extends StatefulWidget {
 }
 
 class _CreateDokumenState extends State<CreateDokumen> {
+
+
   @override
   Widget build(BuildContext context) {
     // cuma perlu di bungkus saja
@@ -49,7 +51,6 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         child: TextFormField(
                                           controller: model.noreg,
                                           decoration: InputDecoration(
-                                            
                                             hintText: 'Masukan Inputan',
                                             border: OutlineInputBorder(),
                                             contentPadding: EdgeInsets.all(10),
@@ -103,6 +104,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         child: DropdownButtonFormField(
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(color: 
+                                                  Colors.white),),  
                                           ),
                                           hint: Padding(padding: EdgeInsets.symmetric(horizontal:5),
                                             child: Text("Pilih Jenis Dokumen", style: TextStyle(fontSize: 16) )
@@ -122,7 +126,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                                 child: Text(valueItem)),
                                             );
                                           }).toList(),
-                                          validator: (value) => value == null
+                                          validator: (valueItem) => valueItem == null
                                             ? 'Please choose an option' : null,
                                         ),
                                       )),
@@ -130,13 +134,28 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ElevatedButton(
                                       onPressed: () {
-                                        
-                                        createDokumen(
+                                        // if (model.formkey.currentState!.validate()) {
+                                        //   //form is valid, proceed further
+                                        //   //model.formkey.currentState.save();//save once fields are valid, onSaved method invoked for every form fields
+                                        // } else {
+                                        //   // setState(() {
+                                        //   //   _autovalidate = true; //enable realtime validation
+                                        //   // });
+                                          createDokumen(
                                             model.indexDokumen,
                                             model.noreg.text,
                                             model.fileBytes,
-                                            model.fileName);
-                                        Get.offAllNamed('/home');
+                                            model.fileName
+                                          );
+                                          Get.offAllNamed('/home');
+                                        //}
+
+                                        // createDokumen(
+                                        //     model.indexDokumen,
+                                        //     model.noreg.text,
+                                        //     model.fileBytes,
+                                        //     model.fileName);
+                                        // Get.offAllNamed('/home');
                                       },
                                       child: Text('Tambah'),
                                     ),
