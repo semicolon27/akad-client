@@ -56,7 +56,7 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                       enabled: false,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(),
-                                        hintText: 'Masukan Inputan',
+                                        hintText: 'Masukan Nomor Registrasi',
                                       ),
                                     )),
                               ),
