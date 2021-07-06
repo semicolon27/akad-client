@@ -144,15 +144,16 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                   child: Text('Edit'),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text('Cancel'),
+                              Padding(padding: EdgeInsets.all(5)),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
                                 ),
-                              )
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text('Cancel'),
+                              ),
                             ],
                           ) // Row Baris Utama 2
                         ],
