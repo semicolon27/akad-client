@@ -17,8 +17,33 @@ class CreateDokumen extends StatefulWidget {
 }
 
 class _CreateDokumenState extends State<CreateDokumen> {
+  
+
   @override
   Widget build(BuildContext context) {
+
+    void showAlert(String message){
+      AlertDialog alert = AlertDialog(
+      title: Text("Data Tidak Lengkap"),
+      content: Text(message),
+      actions: [
+        ElevatedButton(
+          onPressed: () => Get.back(),
+          child: Text("ok"),
+        ),
+      ],
+    );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+          },
+        );
+    }
+    
+     
+
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
@@ -28,7 +53,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
               builder: (context, model, child) => SingleChildScrollView(
                     child: Column(
                       children: [
-                        Form(
+                        Form( 
                           autovalidateMode: AutovalidateMode.always,
                           key: model.formkey,
                           child: Row(
@@ -45,7 +70,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(vertical: 16),
                                     child: Container(
-                                        height: 50,
+                                        //height: 50,
                                         width: 300,
                                         child: TextFormField(
                                           controller: model.noreg,
@@ -53,17 +78,26 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           //   model.setNoregField(val);
                                           // },
                                           decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
                                             hintText: 'Masukan Inputan',
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.all(10),
                                           ),
-                                        )),
+                                          validator: (value) {
+                                            if(value == null || value.isEmpty){
+                                              //return '';
+                                            }
+                                            //return null; 
+                                          },
+                                        )
+                                        ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
                                     child: Row(children: [
                                       ElevatedButton(
                                           onPressed: () => model.pilihFile(),
-                                          child: Text("Upload file")),
+                                          child: Text("Upload file"),
+                                          ),
                                       Container(
                                         // height: 0,
                                         width: 195,
@@ -91,62 +125,74 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 16),
+                                      padding: EdgeInsets.symmetric(vertical: 16),
                                       child: Container(
-                                        height: 50,
+                                        //height: 50,
                                         width: 300,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color: Colors.grey, width: 1)),
-                                        child: DropdownButton(
-                                          hint: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 16),
-                                            child: Text("Pilih Jenis Dokumen"),
+                                        child: DropdownButtonFormField(
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(color: 
+                                                  Colors.white),),  
                                           ),
-                                          dropdownColor: Colors.white,
+                                          hint: Padding(padding: EdgeInsets.symmetric(horizontal:5),
+                                            child: Text("Pilih Jenis Dokumen", style: TextStyle(fontSize: 16) )
+                                          ),
                                           icon: Icon(Icons.arrow_drop_down),
                                           isExpanded: true,
-                                          underline: SizedBox(),
+                                          onChanged: (newValue) {
+                                            model.pilihJenisDokumen(newValue);
+                                            // model.jenis = Value; 
+                                          },
                                           value: model.jenis,
-                                          onChanged: (newValue) =>
-                                              model.pilihJenisDokumen(newValue),
                                           items: model.jenisDokumen
-                                              .map((valueItem) {
+                                          .map((valueItem){
                                             return DropdownMenuItem(
                                               value: valueItem,
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 8,
-                                                    vertical: 16),
-                                                child: Text(valueItem),
-                                              ),
+                                                padding:EdgeInsets.symmetric(horizontal:5),
+                                                child: Text(valueItem)),
                                             );
                                           }).toList(),
+                                          // validator: (valueItem) => valueItem == null
+                                          //   ? '' 
+                                          //   : '',
+                                           validator: (valueItem) {
+                                            if(valueItem == null){
+                                              //return '';
+                                            }
+                                            //return null; 
+                                          },
                                         ),
                                       )),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 50),
                                     child: ElevatedButton(
-                                      //icon: Icon(Icons.edit),
-                                      // onPressed: (model.validate)
-                                      //     ? () {
-                                      //         print("true");
-
-                                      //       }
-                                      //     : () {
-                                      //         print("false");
-                                      //       },
                                       onPressed: () {
-                                        createDokumen(
+                                        if (model.fileBytes != null && !model.noreg.text.isEmpty && model.indexDokumen != null){
+                                          print(model.noreg.text);
+                                          createDokumen(
                                             model.indexDokumen,
                                             model.noreg.text,
                                             model.fileBytes,
                                             model.fileName);
-                                        Get.offAllNamed('/home');
+                                            Get.offAllNamed('/home');
+                                        }else{
+                                          String msg = '';
+                                          if(model.fileBytes == null){
+                                            msg = msg + "File Belum dipilih\n";
+                                          }
+                                          if(model.noreg.text.isEmpty){
+                                            msg = msg + "Nomor Registrasi belum dimasukkan\n";
+                                          }
+                                          if(model.indexDokumen == null){
+                                            msg = msg + "Jenis Dokumen belum dipilih";
+                                          }
+                                            showAlert(msg);
+                                          
+                                          }
+                                        // }
                                       },
 
                                       child: Text('Tambah'),
