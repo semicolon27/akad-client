@@ -30,7 +30,6 @@ class HomeVM extends BaseViewModel {
   }
 
   void filterData(String keyword) {
-    print(_data);
     _listDokumen = data
         .where((element) =>
             element.noreg.contains(keyword) || element.nama.contains(keyword))

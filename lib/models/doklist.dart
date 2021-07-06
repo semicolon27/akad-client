@@ -10,15 +10,13 @@ class Doklist {
       required this.jenis});
 
   factory Doklist.getDoklist(Map<String, dynamic> object) {
+    String namaDok = object['Dokumen']['nama'];
+    var ext = namaDok.split('.');
+    namaDok = namaDok.substring(0, namaDok.length - (ext.last.length + 1));
     return Doklist(
         id: object['Dokumen']['id'],
-        nama: object['Dokumen']['nama'],
+        nama: namaDok,
         noreg: object['Dokumen']['noreg'],
         jenis: object['singkatan']);
   }
-
-  // @override
-  // String toString() {
-  //   return "$nama";
-  // }
 }
