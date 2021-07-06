@@ -8,7 +8,7 @@ class Dokumen {
   var jenis;
   var file;
   String? extension;
-  String? keterangan;
+  String keterangan;
 
   Dokumen(
       {required this.id,
@@ -16,8 +16,8 @@ class Dokumen {
       required this.nama,
       required this.noreg,
       required this.file,
-      this.extension,
-      this.keterangan});
+      required this.keterangan,
+      this.extension});
 
   factory Dokumen.fromJson(Map<String, dynamic> x) {
     return Dokumen(
@@ -44,6 +44,7 @@ class Dokumen {
           id: x['Dokumen']['id'],
           nama: x['Dokumen']['nama'],
           noreg: x['Dokumen']['noreg'],
+          keterangan: x['Dokumen']['keterangan'],
           jenis: x['singkatan'],
           extension: ext.last,
           file: decodedBytes);

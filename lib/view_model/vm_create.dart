@@ -52,6 +52,7 @@ class CreateVM extends BaseViewModel {
     for (int i = 0; i < _jenis.length; i++) {
       jenisDokumen.add(_jenis[i].singkatan);
     }
+    keterangan.text = '';
     setBusyForObject(_jenis, false);
     notifyListeners();
   }

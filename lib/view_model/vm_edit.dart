@@ -11,6 +11,7 @@ class UpdateVM extends BaseViewModel {
   final TextEditingController noreg = TextEditingController();
   final TextEditingController keterangan = TextEditingController();
   var indexDokumen;
+  var jenisDok;
 
   List jenisDokumen = ["Kartu"];
 
@@ -31,6 +32,7 @@ class UpdateVM extends BaseViewModel {
     for (int i = 0; i < _jenis.length; i++) {
       if (_jenis[i].singkatan == newValue) {
         indexDokumen = _jenis[i].id;
+        jenisDok = _jenis[i].singkatan;
       }
     }
     notifyListeners();
@@ -56,7 +58,7 @@ class UpdateVM extends BaseViewModel {
     _data = await readDokumen(id);
     _oldData = _data;
     noreg.text = _data.first.noreg;
-    keterangan.text = _data.first.keterangan!;
+    keterangan.text = _data.first.keterangan;
     pilihJenisDokumen(_data.first.jenis);
     setBusyForObject(_data, false);
     notifyListeners();

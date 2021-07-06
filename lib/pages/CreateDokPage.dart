@@ -58,7 +58,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(top: 15),
+                                    padding: EdgeInsets.only(top: 50),
                                     child: Text("Nomor Registrasi",
                                         style: TextStyle(fontSize: 20)),
                                   ),
@@ -73,7 +73,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           //   model.setNoregField(val);
                                           // },
                                           decoration: InputDecoration(
-                                            hintText: 'Masukan Nomor Registrasi',
+                                            hintText: 'Masukan Inputan',
                                             border: OutlineInputBorder(),
                                             contentPadding: EdgeInsets.all(10),
                                           ),
@@ -87,8 +87,8 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         )),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Text("Keterangan",
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Text("Keterangan Dokumen",
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
@@ -98,8 +98,11 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         width: 300,
                                         child: TextFormField(
                                           controller: model.keterangan,
+                                          // onChanged: (String val) {
+                                          //   model.setNoregField(val);
+                                          // },
                                           decoration: InputDecoration(
-                                            hintText: 'Masukkan Keterangan',
+                                            hintText: 'Masukan Inputan',
                                             border: OutlineInputBorder(),
                                             contentPadding: EdgeInsets.all(10),
                                           ),
@@ -118,16 +121,15 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(top: 65),
+                                    padding: EdgeInsets.only(top: 35),
                                     child: Text("Jenis Dokumen",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
                                       padding:
-                                      EdgeInsets.symmetric(vertical: 16),
-                                      child: 
-                                      Container(
+                                          EdgeInsets.symmetric(vertical: 16),
+                                      child: Container(
                                         //height: 50,
                                         width: 300,
                                         child: DropdownButtonFormField(
@@ -161,26 +163,20 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                                   child: Text(valueItem)),
                                             );
                                           }).toList(),
-                                          // validator: (valueItem) => valueItem == null
-                                          //   ? ''
-                                          //   : '',
-                                          validator: (valueItem) {
-                                            if (valueItem == null) {
-                                              //return '';
-                                            }
-                                            //return null;
-                                          },
                                         ),
-                                      )
-                                      ),
+                                      )),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 50),
-                                    child:
-                                    Row(
-                                      children: [
+                                    padding: EdgeInsets.only(top: 50),
+                                    child: Text("File Dokumen",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: Row(children: [
                                       Container(
-                                        height: 47,
-                                        width: 195,
+                                        height: 50,
+                                        width: 200,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(5),
@@ -188,72 +184,60 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                               color: Colors.grey,
                                             )),
                                         padding: EdgeInsets.all(5),
-                                        margin: EdgeInsets.only(left: 5),
-                                        child: 
-                                        Text(model.fileName,
-                                          style: TextStyle(fontSize: 17, color: Colors.grey),
+                                        margin: EdgeInsets.only(right: 5),
+                                        child: Text(
+                                          model.fileName,
+                                          style: TextStyle(
+                                              fontSize: 17, color: Colors.grey),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(2),
                                       ),
                                       ElevatedButton(
                                         onPressed: () => model.pilihFile(),
                                         child: Text("Pilih File"),
                                         style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 24, vertical: 22),
                                         ),
                                       ),
-                                      
                                     ]),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 50, left: 5),
-                                      child: Column(
-                                        //mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              if (model.fileBytes != null &&
-                                                  model.noreg.text.isEmpty &&
-                                                  model.indexDokumen != null) {
-                                                  print(model.noreg.text);
-                                                  var hasil = createDokumen(
-                                                    model.indexDokumen,
-                                                    model.noreg.text,
-                                                    model.fileBytes,
-                                                    model.fileName,
-                                                    model.keterangan.text);
-                                                  Get.offAllNamed('/home',
-                                                    arguments: hasil);
-                                                } else {
-                                                  String msg = '';
-                                                  if (model.fileBytes == null) {
-                                                    msg = msg + "File Belum dipilih\n";
-                                                  }
-                                                  if (model.noreg.text.isEmpty) {
-                                                    msg = msg +
-                                                        "Nomor Registrasi belum dimasukkan\n";
-                                                  }
-                                                  if (model.indexDokumen == null) {
-                                                    msg = msg +
-                                                        "Jenis Dokumen belum dipilih";
-                                                  }
-                                                  showAlert(msg);
-                                                }
-                                                // }
-                                              },
-                                              child: Text('Tambah'),
-                                              style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.symmetric(horizontal: 124, vertical: 22),
-                                        ),
-                                            ),
-                                        ],
-                                      ),
-                                  ),
                                 ],
-                              ), // 
+                              ) // Row Baris Utama 2
                             ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (model.fileBytes != null &&
+                                  !model.noreg.text.isEmpty &&
+                                  model.indexDokumen != null) {
+                                print(model.noreg.text);
+                                createDokumen(
+                                    model.indexDokumen,
+                                    model.noreg.text,
+                                    model.fileBytes,
+                                    model.fileName,
+                                    model.keterangan.text);
+                                Get.offAllNamed('/home');
+                              } else {
+                                String msg = '';
+                                if (model.fileBytes == null) {
+                                  msg = msg + "File Belum dipilih\n";
+                                }
+                                if (model.noreg.text.isEmpty) {
+                                  msg = msg +
+                                      "Nomor Registrasi belum dimasukkan\n";
+                                }
+                                if (model.indexDokumen == null) {
+                                  msg = msg + "Jenis Dokumen belum dipilih";
+                                }
+                                showAlert(msg);
+                              }
+                              // }
+                            },
+                            child: Text('Tambah'),
                           ),
                         ),
                         Container(
@@ -277,7 +261,7 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           const EdgeInsetsDirectional.all(25),
                                       child: Image.memory(model.fileBytes),
                                     ),
-                        ),
+                        )
                       ],
                     ),
                   ))),

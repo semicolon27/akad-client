@@ -29,97 +29,109 @@ class _DetailDokumenState extends State<DetailDokumen> {
               ? SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 50),
-                                  child: Text("Nomor Registrasi",
-                                      style: TextStyle(fontSize: 15)),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(model.data.first.noreg,
-                                      style: TextStyle(fontSize: 20)),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 50),
-                                  child: Text("File",
-                                      style: TextStyle(fontSize: 15)),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(model.data.first.nama,
-                                      style: TextStyle(fontSize: 20)),
-                                ),
-                              ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Nomor Registrasi",
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(model.data.first.noreg,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Keterangan Dokumen",
+                                    style: TextStyle(fontSize: 15)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: (model.data.first.keterangan == '')
+                                    ? Text("-")
+                                    : Text(model.data.first.keterangan,
+                                        style: TextStyle(fontSize: 20)),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text("Jenis Dokumen",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(model.data.first.jenis,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("File Dokumen",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Text(model.data.first.nama,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                            ],
+                          ) // Row Baris Utama 2
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(padding: EdgeInsets.all(10)),
+                          ElevatedButton(
+                            onPressed: () => {
+                              Get.toNamed(
+                                  '/edit/${Get.parameters['id'].toString()}')
+                            },
+                            child: Text('Edit'),
+                          ),
+                          Padding(padding: EdgeInsets.all(5)),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 50),
-                                  child: Text("Jenis Dokumen",
-                                      style: TextStyle(fontSize: 15)),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Text(model.data.first.jenis,
-                                      style: TextStyle(fontSize: 20)),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 50),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () => {
-                                          Get.toNamed(
-                                              '/edit/${Get.parameters['id'].toString()}')
-                                        },
-                                        child: Text('Edit'),
-                                      ),
-                                      Padding(padding: EdgeInsets.all(5)),
-                                      ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.red,
-                                        ),
-                                        onPressed: () {
-                                          deleteDokumen(
-                                              Get.parameters['id'].toString());
-                                          Get.offAllNamed('/home');
-                                        },
-                                        child: Text('Hapus'),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ) // Row Baris Utama 2
-                          ],
-                        ),
+                            onPressed: () {
+                              deleteDokumen(Get.parameters['id'].toString());
+                              Get.offAllNamed('/home');
+                            },
+                            child: Text('Hapus'),
+                          ),
+                        ],
                       ),
                       Container(
-                          child: (model.data.first.extension == 'pdf')
-                              ? Container(
-                                  width: 650,
-                                  height: 400,
-                                  margin: const EdgeInsetsDirectional.all(25),
-                                  child: PdfPreview(
-                                    build: (newFile) => generatePDF(
-                                        newFile, model.data.first.file),
-                                  ))
-                              : Container(
-                                  width: 650,
-                                  height: 350,
-                                  margin: const EdgeInsetsDirectional.all(25),
-                                  child: Image.memory(model.data.first.file)))
-                      // buatpreview
+                          child: (model.data.first.file == null)
+                              ? Text(" ")
+                              : (model.data.first.extension == 'pdf')
+                                  ? Container(
+                                      width: 650,
+                                      height: 400,
+                                      margin:
+                                          const EdgeInsetsDirectional.all(25),
+                                      child: PdfPreview(
+                                        build: (newFile) => generatePDF(
+                                            newFile, model.data.first.file),
+                                      ))
+                                  : Container(
+                                      width: 650,
+                                      height: 350,
+                                      margin:
+                                          const EdgeInsetsDirectional.all(25),
+                                      child:
+                                          Image.memory(model.data.first.file)))
                     ],
                   ),
                 )

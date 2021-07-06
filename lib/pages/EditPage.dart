@@ -39,182 +39,156 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                    padding: EdgeInsets.only(top: 15),
-                                    child: Text("Nomor Registrasi",
-                                        style: TextStyle(fontSize: 20)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
-                                    child: Container(
-                                        //height: 50,
-                                        width: 300,
-                                        child: TextFormField(
-                                          controller: model.noreg,
-                                          // onChanged: (String val) {
-                                          //   model.setNoregField(val);
-                                          // },
-                                          decoration: InputDecoration(
-                                            hintText: 'Masukan Nomor Registrasi',
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.all(10),
-                                          ),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              //return '';
-                                            }
-                                            //return null;
-                                          },
-                                        )),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 20),
-                                    child: Text("Keterangan",
-                                        style: TextStyle(fontSize: 20)),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
-                                    child: Container(
-                                        //height: 50,
-                                        width: 300,
-                                        child: TextFormField(
-                                          controller: model.keterangan,
-                                          decoration: InputDecoration(
-                                            hintText: 'Masukkan Keterangan',
-                                            border: OutlineInputBorder(),
-                                            contentPadding: EdgeInsets.all(10),
-                                          ),
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              //return '';
-                                            }
-                                            //return null;
-                                          },
-                                      )),
-                                  ),
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Nomor Registrasi",
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Container(
+                                    //height: 50,
+                                    width: 300,
+                                    child: TextFormField(
+                                      controller: model.noreg,
+                                      decoration: InputDecoration(
+                                        hintText: 'Masukan Nomor Registrasi',
+                                        border: OutlineInputBorder(),
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    )),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("Keterangan Dokumen",
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                child: Container(
+                                    width: 300,
+                                    child: TextFormField(
+                                      controller: model.keterangan,
+                                      decoration: InputDecoration(
+                                        hintText: '(Opsional)',
+                                        border: OutlineInputBorder(),
+                                        contentPadding: EdgeInsets.all(10),
+                                      ),
+                                    )),
+                              ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                    padding: EdgeInsets.only(top: 65),
-                                    child: Text("Jenis Dokumen",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(fontSize: 20)),
+                                padding: EdgeInsets.only(top: 40),
+                                child: Text("Jenis Dokumen",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 20)),
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: 
-                                  Container(
+                                child: Container(
                                     width: 300,
                                     child: DropdownButtonFormField(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(),
-                                      focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                      color: Colors.white)),
-                                    ),
-                                    hint: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 5),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white)),
+                                      ),
+                                      hint: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 5),
                                           child: Text("Pilih Jenis Dokumen",
-                                            style:
-                                              TextStyle(fontSize: 16))),
+                                              style: TextStyle(fontSize: 16))),
                                       icon: Icon(Icons.arrow_drop_down),
                                       isExpanded: true,
                                       onChanged: (newValue) {
                                         model.pilihJenisDokumen(newValue);
-                                          // model.jenis = Value;
                                       },
-                                        value: model.jenis,
-                                        items: model.jenisDokumen
-                                          .map((valueItem) {
-                                          return DropdownMenuItem(
-                                            value: valueItem,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(horizontal: 5),
-                                                child: Text(valueItem)),
-                                            );
-                                          }).toList(),
-                                          // validator: (valueItem) => valueItem == null
-                                          //   ? ''
-                                          //   : '',
-                                          validator: (valueItem) {
-                                            if (valueItem == null) {
-                                              //return '';
-                                          }
-                                            //return null;
-                                          },
+                                      value: model.jenisDok,
+                                      items:
+                                          model.jenisDokumen.map((valueItem) {
+                                        return DropdownMenuItem(
+                                          value: valueItem,
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(valueItem)),
+                                        );
+                                      }).toList(),
+                                    )),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Text("File Dokumen",
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16),
+                                child: Row(children: [
+                                  Container(
+                                    height: 50,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                          color: Colors.grey,
                                         )),
-                              ),
-                              Padding(
-                                    padding: const EdgeInsets.only(top: 50),
-                                    child:
-                                    Row(
-                                      children: [
-                                      Container(
-                                        height: 47,
-                                        width: 195,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                              color: Colors.grey,
-                                            )),
-                                        padding: EdgeInsets.all(5),
-                                        margin: EdgeInsets.only(left: 5),
-                                        child: 
-                                        Text("kk",
-                                          style: TextStyle(fontSize: 17, color: Colors.grey),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.all(2),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () => model.pilihFile(),
-                                        child: Text("Pilih File"),
-                                        style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
-                                        ),
-                                      ),
-                                      
-                                    ]),
+                                    padding: EdgeInsets.all(5),
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Text(
+                                      model.data.first.nama,
+                                      style: TextStyle(
+                                          fontSize: 17, color: Colors.grey),
+                                    ),
                                   ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: ElevatedButton(
-                                  //icon: Icon(Icons.edit),
-                                  onPressed: () {
-                                    updateDokumen(
-                                        Get.parameters['id'].toString(),
-                                        model.indexDokumen,
-                                        model.noreg.text,
-                                        model.data.first.file,
-                                        model.data.first.nama,
-                                        model.keterangan.text);
-
-                                    Get.offAllNamed('/home');
-                                  },
-                                  child: Text('Edit'),
-                                ),
-                              ),
-                              Padding(padding: EdgeInsets.all(5)),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.red,
-                                ),
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: Text('Cancel'),
+                                  ElevatedButton(
+                                    onPressed: () => model.pilihFile(),
+                                    child: Text("Pilih File"),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 22),
+                                    ),
+                                  ),
+                                ]),
                               ),
                             ],
                           ) // Row Baris Utama 2
                         ],
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(padding: EdgeInsets.all(10)),
+                        ElevatedButton(
+                          onPressed: () {
+                            updateDokumen(
+                                Get.parameters['id'].toString(),
+                                model.indexDokumen,
+                                model.noreg.text,
+                                model.data.first.file,
+                                model.data.first.nama,
+                                model.keterangan.text);
+
+                            Get.offAllNamed('/home');
+                          },
+                          child: Text('Edit'),
+                        ),
+                        Padding(padding: EdgeInsets.all(5)),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text('Cancel'),
+                        ),
+                      ],
                     ),
                     Container(
                         child: (model.data.first.file == null)
