@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 class CreateVM extends BaseViewModel {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final TextEditingController noreg = TextEditingController();
+  final TextEditingController keterangan = TextEditingController();
   var fileBytes;
   var fileExtension;
   var indexDokumen;

@@ -7,13 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
-Future<Dokumen> createDokumen(
-    int jenis, String noreg, var file, String filename) async {
+Future<Dokumen> createDokumen(int jenis, String noreg, var file,
+    String filename, String keterangan) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
     "noreg": noreg,
     "jenis": jenis,
     "nama": filename,
+    "keterangan": keterangan,
     'file': MultipartFile.fromBytes(file, filename: filename),
   });
   Response responses = await dio.post('http://127.0.0.1:8000/', data: formData);
@@ -34,13 +35,14 @@ Future<List<Dokumen>> readDokumen(String? id) async {
   return isi;
 }
 
-Future<Dokumen> updateDokumen(
-    String id, int jenis, String noreg, var file, String filename) async {
+Future<Dokumen> updateDokumen(String id, int jenis, String noreg, var file,
+    String filename, String keterangan) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
     "noreg": noreg,
     "jenis": jenis,
     "nama": filename,
+    "keterangan": keterangan,
     'file': MultipartFile.fromBytes(file, filename: filename),
   });
   Response responses =

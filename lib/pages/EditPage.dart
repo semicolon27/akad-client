@@ -136,7 +136,8 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                         model.indexDokumen,
                                         model.noreg.text,
                                         model.data.first.file,
-                                        model.data.first.nama);
+                                        model.data.first.nama,
+                                        model.keterangan.text);
 
                                     Get.offAllNamed('/home');
                                   },

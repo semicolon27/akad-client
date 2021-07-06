@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 class UpdateVM extends BaseViewModel {
   GlobalKey formkey = GlobalKey();
   final TextEditingController noreg = TextEditingController();
+  final TextEditingController keterangan = TextEditingController();
   var indexDokumen;
 
   List jenisDokumen = ["Kartu"];
@@ -55,6 +56,7 @@ class UpdateVM extends BaseViewModel {
     _data = await readDokumen(id);
     _oldData = _data;
     noreg.text = _data.first.noreg;
+    keterangan.text = _data.first.keterangan!;
     pilihJenisDokumen(_data.first.jenis);
     setBusyForObject(_data, false);
     notifyListeners();

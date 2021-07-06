@@ -38,12 +38,14 @@ class _HomeState extends State<Home> {
               Row(
                 children: [
                   Expanded(
-                    child: Text("Data Pengguna",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
-                        )),
+                    child: (Get.parameters['msg'] == null)
+                        ? Text("Data Pengguna",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent,
+                            ))
+                        : Text(Get.parameters['msg'].toString()),
                   ),
                   Expanded(
                       child: SearchBox(
