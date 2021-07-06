@@ -39,93 +39,150 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 50),
-                                child: Text("Nomor Registrasi",
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Container(
-                                    height: 50,
-                                    width: 300,
-                                    child: TextField(
-                                      controller: model.noreg,
-                                      // enabled: (model.status == "tambah")
-                                      //     ? true
-                                      //     : false,
-                                      enabled: false,
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        hintText: 'Masukan Nomor Registrasi',
-                                      ),
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 50),
-                                child: Row(children: [
-                                  ElevatedButton(
-                                      onPressed: () => model.pilihFile(),
-                                      child: Text("Pilih file")),
-                                  Container(
-                                    // height: 0,
-                                    width: 195,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                        )),
-                                    padding: EdgeInsets.all(5),
-                                    margin: EdgeInsets.only(left: 5),
-                                    child: Text(model.data.first.nama),
+                                    padding: EdgeInsets.only(top: 15),
+                                    child: Text("Nomor Registrasi",
+                                        style: TextStyle(fontSize: 20)),
                                   ),
-                                ]),
-                              ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    child: Container(
+                                        //height: 50,
+                                        width: 300,
+                                        child: TextFormField(
+                                          controller: model.noreg,
+                                          // onChanged: (String val) {
+                                          //   model.setNoregField(val);
+                                          // },
+                                          decoration: InputDecoration(
+                                            hintText: 'Masukan Nomor Registrasi',
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.all(10),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              //return '';
+                                            }
+                                            //return null;
+                                          },
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 20),
+                                    child: Text("Keterangan",
+                                        style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    child: Container(
+                                        //height: 50,
+                                        width: 300,
+                                        child: TextFormField(
+                                          controller: model.keterangan,
+                                          decoration: InputDecoration(
+                                            hintText: 'Masukkan Keterangan',
+                                            border: OutlineInputBorder(),
+                                            contentPadding: EdgeInsets.all(10),
+                                          ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              //return '';
+                                            }
+                                            //return null;
+                                          },
+                                      )),
+                                  ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(top: 50),
-                                child: Text("Jenis Dokumen",
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(fontSize: 20)),
+                                    padding: EdgeInsets.only(top: 65),
+                                    child: Text("Jenis Dokumen",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 20)),
                               ),
                               Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 16),
-                                  child: Container(
-                                    height: 50,
+                                padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: 
+                                  Container(
                                     width: 300,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        border: Border.all(
-                                            color: Colors.grey, width: 1)),
-                                    child: DropdownButton(
-                                      hint: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 16),
-                                        child: Text("Pilih Jenis Dokumen"),
-                                      ),
-                                      dropdownColor: Colors.white,
+                                    child: DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                      color: Colors.white)),
+                                    ),
+                                    hint: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                          child: Text("Pilih Jenis Dokumen",
+                                            style:
+                                              TextStyle(fontSize: 16))),
                                       icon: Icon(Icons.arrow_drop_down),
                                       isExpanded: true,
-                                      underline: SizedBox(),
-                                      value: model.data.first.jenis,
-                                      onChanged: (newValue) =>
-                                          model.pilihJenisDokumen(newValue),
-                                      items:
-                                          model.jenisDokumen.map((valueItem) {
-                                        return DropdownMenuItem(
-                                          value: valueItem,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 16),
-                                            child: Text(valueItem),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  )),
+                                      onChanged: (newValue) {
+                                        model.pilihJenisDokumen(newValue);
+                                          // model.jenis = Value;
+                                      },
+                                        value: model.jenis,
+                                        items: model.jenisDokumen
+                                          .map((valueItem) {
+                                          return DropdownMenuItem(
+                                            value: valueItem,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(horizontal: 5),
+                                                child: Text(valueItem)),
+                                            );
+                                          }).toList(),
+                                          // validator: (valueItem) => valueItem == null
+                                          //   ? ''
+                                          //   : '',
+                                          validator: (valueItem) {
+                                            if (valueItem == null) {
+                                              //return '';
+                                          }
+                                            //return null;
+                                          },
+                                        )),
+                              ),
+                              Padding(
+                                    padding: const EdgeInsets.only(top: 50),
+                                    child:
+                                    Row(
+                                      children: [
+                                      Container(
+                                        height: 47,
+                                        width: 195,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                              color: Colors.grey,
+                                            )),
+                                        padding: EdgeInsets.all(5),
+                                        margin: EdgeInsets.only(left: 5),
+                                        child: 
+                                        Text("kk",
+                                          style: TextStyle(fontSize: 17, color: Colors.grey),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.all(2),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () => model.pilihFile(),
+                                        child: Text("Pilih File"),
+                                        style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+                                        ),
+                                      ),
+                                      
+                                    ]),
+                                  ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 50),
                                 child: ElevatedButton(

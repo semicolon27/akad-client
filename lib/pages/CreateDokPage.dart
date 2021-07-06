@@ -125,8 +125,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   ),
                                   Padding(
                                       padding:
-                                          EdgeInsets.symmetric(vertical: 16),
-                                      child: Container(
+                                      EdgeInsets.symmetric(vertical: 16),
+                                      child: 
+                                      Container(
                                         //height: 50,
                                         width: 300,
                                         child: DropdownButtonFormField(
