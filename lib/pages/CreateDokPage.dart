@@ -58,15 +58,15 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(top: 50),
+                                    padding: EdgeInsets.only(top: 20),
                                     child: Text("Nomor Registrasi",
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Container(
                                         //height: 50,
-                                        width: 300,
+                                        width: 500,
                                         child: TextFormField(
                                           controller: model.noreg,
                                           // onChanged: (String val) {
@@ -87,15 +87,15 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         )),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 50),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Text("Keterangan Dokumen",
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                     child: Container(
                                         //height: 50,
-                                        width: 300,
+                                        width: 500,
                                         child: TextFormField(
                                           controller: model.keterangan,
                                           // onChanged: (String val) {
@@ -115,23 +115,18 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                           },
                                         )),
                                   ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
                                   Padding(
-                                    padding: EdgeInsets.only(top: 35),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Text("Jenis Dokumen",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
                                       padding:
-                                          EdgeInsets.symmetric(vertical: 16),
+                                          EdgeInsets.symmetric(vertical: 10),
                                       child: Container(
                                         //height: 50,
-                                        width: 300,
+                                        width: 500,
                                         child: DropdownButtonFormField(
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(),
@@ -166,17 +161,17 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                         ),
                                       )),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 50),
+                                    padding: EdgeInsets.only(top: 10),
                                     child: Text("File Dokumen",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 16),
+                                    padding: const EdgeInsets.only(top: 10),
                                     child: Row(children: [
                                       Container(
                                         height: 50,
-                                        width: 200,
+                                        width: 400,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(5),
@@ -202,7 +197,94 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                     ]),
                                   ),
                                 ],
-                              ) // Row Baris Utama 2
+                              ),
+                              //gap column
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Padding(
+                              //       padding: EdgeInsets.only(top: 35),
+                              //       child: Text("Jenis Dokumen",
+                              //           textAlign: TextAlign.left,
+                              //           style: TextStyle(fontSize: 20)),
+                              //     ),
+                              //     Padding(
+                              //         padding:
+                              //             EdgeInsets.symmetric(vertical: 16),
+                              //         child: Container(
+                              //           //height: 50,
+                              //           width: 300,
+                              //           child: DropdownButtonFormField(
+                              //             decoration: InputDecoration(
+                              //               border: OutlineInputBorder(),
+                              //               focusedBorder: UnderlineInputBorder(
+                              //                 borderSide: BorderSide(
+                              //                     color: Colors.white),
+                              //               ),
+                              //             ),
+                              //             hint: Padding(
+                              //                 padding: EdgeInsets.symmetric(
+                              //                     horizontal: 5),
+                              //                 child: Text("Pilih Jenis Dokumen",
+                              //                     style:
+                              //                         TextStyle(fontSize: 16))),
+                              //             icon: Icon(Icons.arrow_drop_down),
+                              //             isExpanded: true,
+                              //             onChanged: (newValue) {
+                              //               model.pilihJenisDokumen(newValue);
+                              //               // model.jenis = Value;
+                              //             },
+                              //             value: model.jenis,
+                              //             items: model.jenisDokumen
+                              //                 .map((valueItem) {
+                              //               return DropdownMenuItem(
+                              //                 value: valueItem,
+                              //                 child: Padding(
+                              //                     padding: EdgeInsets.symmetric(
+                              //                         horizontal: 5),
+                              //                     child: Text(valueItem)),
+                              //               );
+                              //             }).toList(),
+                              //           ),
+                              //         )),
+                              //     Padding(
+                              //       padding: EdgeInsets.only(top: 50),
+                              //       child: Text("File Dokumen",
+                              //           textAlign: TextAlign.left,
+                              //           style: TextStyle(fontSize: 20)),
+                              //     ),
+                              //     Padding(
+                              //       padding: const EdgeInsets.only(top: 16),
+                              //       child: Row(children: [
+                              //         Container(
+                              //           height: 50,
+                              //           width: 200,
+                              //           decoration: BoxDecoration(
+                              //               borderRadius:
+                              //                   BorderRadius.circular(5),
+                              //               border: Border.all(
+                              //                 color: Colors.grey,
+                              //               )),
+                              //           padding: EdgeInsets.all(5),
+                              //           margin: EdgeInsets.only(right: 5),
+                              //           child: Text(
+                              //             model.fileName,
+                              //             style: TextStyle(
+                              //                 fontSize: 17, color: Colors.grey),
+                              //           ),
+                              //         ),
+                              //         ElevatedButton(
+                              //           onPressed: () => model.pilihFile(),
+                              //           child: Text("Pilih File"),
+                              //           style: ElevatedButton.styleFrom(
+                              //             padding: EdgeInsets.symmetric(
+                              //                 horizontal: 24, vertical: 22),
+                              //           ),
+                              //         ),
+                              //       ]),
+                              //     ),
+                              //   ],
+                              // ) 
                             ],
                           ),
                         ),

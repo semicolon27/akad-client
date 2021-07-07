@@ -165,8 +165,8 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                       children: [
                         Padding(padding: EdgeInsets.all(10)),
                         ElevatedButton(
-                          onPressed: () {
-                            updateDokumen(
+                          onPressed: () async {
+                            await updateDokumen(
                                 Get.parameters['id'].toString(),
                                 model.indexDokumen,
                                 model.noreg.text,

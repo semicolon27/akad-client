@@ -79,6 +79,10 @@ class _HomeState extends State<Home> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
                             DataColumn(
+                                label: Text("Keterangan",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold))),
+                            DataColumn(
                                 label: Text("Aksi",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold))),
@@ -90,6 +94,7 @@ class _HomeState extends State<Home> {
                                     DataCell(Text(data.noreg)),
                                     DataCell(Text(data.nama)),
                                     DataCell(Text(data.jenis)),
+                                    DataCell(Text(data.keterangan ?? "-")),
                                     DataCell(ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           onSurface: Colors.blue),
