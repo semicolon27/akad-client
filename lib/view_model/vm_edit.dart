@@ -58,7 +58,7 @@ class UpdateVM extends BaseViewModel {
     _data = await readDokumen(id);
     _oldData = _data;
     noreg.text = _data.first.noreg;
-    keterangan.text = _data.first.keterangan;
+    keterangan.text = _data.first.keterangan ?? "";
     pilihJenisDokumen(_data.first.jenis);
     setBusyForObject(_data, false);
     notifyListeners();

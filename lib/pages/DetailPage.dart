@@ -54,7 +54,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                 padding: EdgeInsets.symmetric(vertical: 16),
                                 child: (model.data.first.keterangan == '')
                                     ? Text("-")
-                                    : Text(model.data.first.keterangan,
+                                    : Text(model.data.first.keterangan ?? "",
                                         style: TextStyle(fontSize: 20)),
                               ),
                             ],
