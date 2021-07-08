@@ -22,8 +22,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
   Widget build(BuildContext context) {
     return TemplateWidget(
         child: Scaffold(
-      body: ViewModelBuilder<DetailVM>.reactive(
-          viewModelBuilder: () => DetailVM(),
+      body: ViewModelBuilder<DokumenVM>.reactive(
+          viewModelBuilder: () => DokumenVM(),
           onModelReady: (vm) => vm.init(Get.parameters['id'].toString()),
           builder: (context, model, child) => !model.busy(model.data)
               ? SingleChildScrollView(

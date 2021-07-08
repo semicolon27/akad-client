@@ -25,17 +25,16 @@ Future<Dokumen> createDokumen(int jenis, String noreg, var file,
   }
 }
 
-Future<List<Dokumen>> readDokumen(String? id) async {
+Future<Dokumen> readDokumen(String? id) async {
   String url = "http://127.0.0.1:8000/getbyid/$id";
   var response = await http.get(Uri.parse(url));
   var jsonObject = jsonDecode(response.body);
-  List<Dokumen> isi = [];
-
-  isi.add(Dokumen.getDokumen(jsonObject));
+  Dokumen isi = Dokumen.fromJson(jsonObject);
+  print(isi);
   return isi;
 }
 
-Future<Dokumen> updateDokumen(String id, int jenis, String noreg, var file,
+Future<Response> updateDokumen(String id, int jenis, String noreg, var file,
     String filename, String keterangan) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
@@ -47,11 +46,8 @@ Future<Dokumen> updateDokumen(String id, int jenis, String noreg, var file,
   });
   Response responses =
       await dio.put('http://127.0.0.1:8000/$id', data: formData);
-  if (responses.statusCode == 201) {
-    return Dokumen.fromJson(jsonDecode(responses.data));
-  } else {
-    throw Exception('Gagal membuat dokumen');
-  }
+
+  return responses;
 }
 
 Future<Dokumen> deleteDokumen(String? id) async {
