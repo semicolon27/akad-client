@@ -1,5 +1,6 @@
 import 'package:akad/controller/c_Dokumen.dart';
-import 'package:akad/view_model/vm_edit.dart';
+import 'package:akad/view_model/vm_detail.dart';
+// import 'package:akad/view_model/vm_edit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akad/pages/template.dart';
@@ -22,8 +23,8 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
     // cuma perlu di bungkus saja
     return TemplateWidget(
       child: Scaffold(
-          body: ViewModelBuilder<UpdateVM>.reactive(
-        viewModelBuilder: () => UpdateVM(),
+          body: ViewModelBuilder<DokumenVM>.reactive(
+        viewModelBuilder: () => DokumenVM(),
         onModelReady: (vm) => vm.init(Get.parameters['id'].toString()),
         builder: (context, model, child) => !model.busy(model.data)
             ? SingleChildScrollView(
@@ -89,36 +90,38 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
                                 child: Container(
-                                    width: 300,
-                                    child: DropdownButtonFormField(
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(),
-                                        focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white)),
+                                  width: 300,
+                                  child: DropdownButtonFormField(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
                                       ),
-                                      hint: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 5),
-                                          child: Text("Pilih Jenis Dokumen",
-                                              style: TextStyle(fontSize: 16))),
-                                      icon: Icon(Icons.arrow_drop_down),
-                                      isExpanded: true,
-                                      onChanged: (newValue) {
-                                        model.pilihJenisDokumen(newValue);
-                                      },
-                                      value: model.jenisDok,
-                                      items:
-                                          model.jenisDokumen.map((valueItem) {
-                                        return DropdownMenuItem(
-                                          value: valueItem,
-                                          child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              child: Text(valueItem)),
-                                        );
-                                      }).toList(),
-                                    )),
+                                    ),
+                                    hint: Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 5),
+                                        child: Text("Pilih Jenis Dokumen",
+                                            style: TextStyle(fontSize: 16))),
+                                    icon: Icon(Icons.arrow_drop_down),
+                                    isExpanded: true,
+                                    onChanged: (newValue) {
+                                      model.pilihJenisDokumen(newValue);
+                                      // model.jenis = Value;
+                                    },
+                                    value: model.jenisDok,
+                                    items: model.jenisDokumen.map((valueItem) {
+                                      return DropdownMenuItem(
+                                        value: valueItem,
+                                        child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: Text(valueItem)),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 50),
@@ -140,7 +143,7 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                                     padding: EdgeInsets.all(5),
                                     margin: EdgeInsets.only(right: 5),
                                     child: Text(
-                                      model.data.first.nama,
+                                      model.data.dokumen.nama,
                                       style: TextStyle(
                                           fontSize: 17, color: Colors.grey),
                                     ),
@@ -165,16 +168,16 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                       children: [
                         Padding(padding: EdgeInsets.all(10)),
                         ElevatedButton(
-                          onPressed: () async {
-                            await updateDokumen(
+                          onPressed: () {
+                            var hasil = model.toUpdate(
                                 Get.parameters['id'].toString(),
-                                model.indexDokumen,
+                                model.idJenis,
                                 model.noreg.text,
-                                model.data.first.file,
-                                model.data.first.nama,
+                                model.getFile(model.data.dokumen),
+                                model.data.dokumen.nama,
                                 model.keterangan.text);
 
-                            Get.offAllNamed('/home');
+                            Get.offAllNamed('/home', arguments: hasil);
                           },
                           child: Text('Edit'),
                         ),
@@ -191,22 +194,24 @@ class _UpdateDokumenState extends State<UpdateDokumen> {
                       ],
                     ),
                     Container(
-                        child: (model.data.first.file == null)
-                            ? Text(" ")
-                            : (model.data.first.extension == 'pdf')
-                                ? Container(
-                                    width: 650,
-                                    height: 400,
-                                    margin: const EdgeInsetsDirectional.all(25),
-                                    child: PdfPreview(
-                                      build: (newFile) => generatePDF(
-                                          newFile, model.data.first.file),
-                                    ))
-                                : Container(
-                                    width: 650,
-                                    height: 350,
-                                    margin: const EdgeInsetsDirectional.all(25),
-                                    child: Image.memory(model.data.first.file)))
+                      child: (model.getExtension(model.data.dokumen.nama) ==
+                              'pdf')
+                          ? Container(
+                              width: 650,
+                              height: 400,
+                              margin: const EdgeInsetsDirectional.all(25),
+                              child: PdfPreview(
+                                build: (newFile) => generatePDF(
+                                    newFile, model.getFile(model.data.dokumen)),
+                              ))
+                          : Container(
+                              width: 650,
+                              height: 350,
+                              margin: const EdgeInsetsDirectional.all(25),
+                              child: Image.memory(
+                                  model.getFile(model.data.dokumen)),
+                            ),
+                    ),
                   ],
                 ),
               )

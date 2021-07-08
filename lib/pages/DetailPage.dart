@@ -22,8 +22,8 @@ class _DetailDokumenState extends State<DetailDokumen> {
   Widget build(BuildContext context) {
     return TemplateWidget(
         child: Scaffold(
-      body: ViewModelBuilder<DetailVM>.reactive(
-          viewModelBuilder: () => DetailVM(),
+      body: ViewModelBuilder<DokumenVM>.reactive(
+          viewModelBuilder: () => DokumenVM(),
           onModelReady: (vm) => vm.init(Get.parameters['id'].toString()),
           builder: (context, model, child) => !model.busy(model.data)
               ? SingleChildScrollView(
@@ -42,7 +42,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(model.data.first.noreg,
+                                child: Text(model.data.dokumen.noreg,
                                     style: TextStyle(fontSize: 20)),
                               ),
                               Padding(
@@ -52,9 +52,9 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
-                                child: (model.data.first.keterangan == '')
+                                child: (model.data.dokumen.keterangan == '')
                                     ? Text("-")
-                                    : Text(model.data.first.keterangan ?? "",
+                                    : Text(model.data.dokumen.keterangan ?? "",
                                         style: TextStyle(fontSize: 20)),
                               ),
                             ],
@@ -70,7 +70,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(model.data.first.jenis,
+                                child: Text(model.data.singkatan,
                                     style: TextStyle(fontSize: 20)),
                               ),
                               Padding(
@@ -81,7 +81,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(model.data.first.nama,
+                                child: Text(model.data.dokumen.nama,
                                     style: TextStyle(fontSize: 20)),
                               ),
                             ],
@@ -113,25 +113,24 @@ class _DetailDokumenState extends State<DetailDokumen> {
                         ],
                       ),
                       Container(
-                          child: (model.data.first.file == null)
-                              ? Text(" ")
-                              : (model.data.first.extension == 'pdf')
-                                  ? Container(
-                                      width: 650,
-                                      height: 400,
-                                      margin:
-                                          const EdgeInsetsDirectional.all(25),
-                                      child: PdfPreview(
-                                        build: (newFile) => generatePDF(
-                                            newFile, model.data.first.file),
-                                      ))
-                                  : Container(
-                                      width: 650,
-                                      height: 350,
-                                      margin:
-                                          const EdgeInsetsDirectional.all(25),
-                                      child:
-                                          Image.memory(model.data.first.file)))
+                        child: (model.getExtension(model.data.dokumen.nama) ==
+                                'pdf')
+                            ? Container(
+                                width: 650,
+                                height: 400,
+                                margin: const EdgeInsetsDirectional.all(25),
+                                child: PdfPreview(
+                                  build: (newFile) => generatePDF(newFile,
+                                      model.getFile(model.data.dokumen)),
+                                ))
+                            : Container(
+                                width: 650,
+                                height: 350,
+                                margin: const EdgeInsetsDirectional.all(25),
+                                child: Image.memory(
+                                    model.getFile(model.data.dokumen)),
+                              ),
+                      ),
                     ],
                   ),
                 )
