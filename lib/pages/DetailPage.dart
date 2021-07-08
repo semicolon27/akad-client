@@ -28,7 +28,13 @@ class _DetailDokumenState extends State<DetailDokumen> {
           builder: (context, model, child) => !model.busy(model.data)
               ? SingleChildScrollView(
                   child: Container(
-                    
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 15,
+                      )
+                    ),
                     child: Column(
                       children: [
                         Row(
