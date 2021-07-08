@@ -294,9 +294,9 @@ class _CreateDokumenState extends State<CreateDokumen> {
                                   },
                                   child: Text('Tambah'),
                                   style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 24, vertical: 22),
-                                          ),
+                                    padding: EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 22),
+                                  ),
                                 ),
                               ),
                             ],
