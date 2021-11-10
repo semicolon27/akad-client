@@ -47,9 +47,9 @@ class DokumenVM extends BaseViewModel {
       type: FileType.custom,
       allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
     );
-    if (picked != null) {
+    if (picked != null && _data != null) {
       // _data.first.file = picked.files.first.bytes;
-      _data.dokumen.nama = picked.files.first.name;
+      _data!.dokumen.nama = picked.files.first.name;
       notifyListeners();
     } else {}
   }
@@ -70,19 +70,19 @@ class DokumenVM extends BaseViewModel {
   // end function controller
 
   // Initial function get Data
-  var _data;
-  Dokumen get data => _data;
-  set data(Dokumen v) {
+  Dokumen? _data;
+  Dokumen? get data => _data;
+  set data(Dokumen? v) {
     _data = v;
     notifyListeners();
   }
-
+ 
   void getDokumen(String id) async {
     setBusyForObject(_data, true);
     _data = await readDokumen(id);
-    noreg.text = _data.dokumen.noreg;
-    keterangan.text = _data.dokumen.keterangan ?? "";
-    pilihJenisDokumen(_data.singkatan);
+    noreg.text = _data?.dokumen.noreg ?? "";
+    keterangan.text = _data?.dokumen.keterangan ?? "";
+    pilihJenisDokumen(_data?.singkatan);
     setBusyForObject(_data, false);
     notifyListeners();
   }

@@ -50,7 +50,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 50),
-                                child: Text(model.data.dokumen.noreg,
+                                child: Text(model.data?.dokumen.noreg ?? "",
                                     style: TextStyle(fontSize: 18)),
                               ),
                             ],
@@ -66,9 +66,9 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 15),
-                                child: (model.data.dokumen.keterangan == '')
+                                child: (model.data?.dokumen.keterangan == '')
                                     ? Text("-")
-                                    : Text(model.data.dokumen.keterangan ?? "",
+                                    : Text(model.data?.dokumen.keterangan ?? "",
                                         style: TextStyle(fontSize: 20)),
                               ),
                             ],
@@ -85,7 +85,7 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 70),
-                                child: Text(model.data.singkatan,
+                                child: Text(model.data?.singkatan ?? "",
                                     style: TextStyle(fontSize: 18)),
                               ),
                             ],
@@ -102,15 +102,16 @@ class _DetailDokumenState extends State<DetailDokumen> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20, horizontal: 82.5),
-                                child: Text(model.data.dokumen.nama,
+                                child: Text(model.data?.dokumen.nama ?? "",
                                     style: TextStyle(fontSize: 18)),
                               ),
                             ],
                           ),
+                          if(model.data != null)
                           Container(
                             margin: EdgeInsets.only(left: 82.5),
                             child: (model.getExtension(
-                                        model.data.dokumen.nama) ==
+                                        model.data?.dokumen.nama ?? "") ==
                                     'pdf')
                                 ? Container(
                                     width: 650,
@@ -118,14 +119,15 @@ class _DetailDokumenState extends State<DetailDokumen> {
                                     margin: const EdgeInsetsDirectional.all(25),
                                     child: PdfPreview(
                                       build: (newFile) => generatePDF(newFile,
-                                          model.getFile(model.data.dokumen)),
-                                    ))
+                                          model.getFile(model.data!.dokumen)),
+                                      
+                                    ),)
                                 : Container(
                                     width: 650,
                                     height: 350,
                                     margin: const EdgeInsetsDirectional.all(25),
                                     child: Image.memory(
-                                        model.getFile(model.data.dokumen)),
+                                        model.getFile(model.data!.dokumen)),
                                   ),
                           ),
                           Container(
