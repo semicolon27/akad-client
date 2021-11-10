@@ -28,10 +28,11 @@ class _HomeState extends State<Home> {
           width: double.infinity,
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-              border: Border.all(
-            color: Colors.white,
-            width: 15,
-          )),
+            border: Border.all(
+              color: Colors.white,
+              width: 15,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

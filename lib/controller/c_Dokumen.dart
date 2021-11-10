@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:akad/constant.dart';
 import 'package:akad/models/doklist.dart';
 import 'package:akad/models/dokumen.dart';
 import 'package:dio/dio.dart';
@@ -7,8 +8,13 @@ import 'package:http/http.dart' as http;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
-Future<Dokumen> createDokumen(int jenis, String noreg, var file,
-    String filename, String keterangan) async {
+Future<Dokumen> createDokumen(
+  int jenis,
+  String noreg,
+  var file,
+  String filename,
+  String keterangan,
+) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
     "noreg": noreg,
@@ -17,7 +23,7 @@ Future<Dokumen> createDokumen(int jenis, String noreg, var file,
     "keterangan": keterangan,
     'file': MultipartFile.fromBytes(file, filename: filename),
   });
-  Response responses = await dio.post('http://127.0.0.1:8000/', data: formData);
+  Response responses = await dio.post('$apiURL/', data: formData);
   if (responses.statusCode == 201) {
     return Dokumen.fromJson(jsonDecode(responses.data));
   } else {
@@ -26,7 +32,7 @@ Future<Dokumen> createDokumen(int jenis, String noreg, var file,
 }
 
 Future<Dokumen> readDokumen(String? id) async {
-  String url = "http://127.0.0.1:8000/getbyid/$id";
+  String url = "$apiURL/getbyid/$id";
   var response = await http.get(Uri.parse(url));
   var jsonObject = jsonDecode(response.body);
   Dokumen isi = Dokumen.fromJson(jsonObject);
@@ -34,8 +40,14 @@ Future<Dokumen> readDokumen(String? id) async {
   return isi;
 }
 
-Future<Response> updateDokumen(String id, int jenis, String noreg, var file,
-    String filename, String keterangan) async {
+Future<Response> updateDokumen(
+  String id,
+  int jenis,
+  String noreg,
+  var file,
+  String filename,
+  String keterangan,
+) async {
   Dio dio = Dio();
   var formData = FormData.fromMap({
     "noreg": noreg,
@@ -44,14 +56,13 @@ Future<Response> updateDokumen(String id, int jenis, String noreg, var file,
     "keterangan": keterangan,
     'file': MultipartFile.fromBytes(file, filename: filename),
   });
-  Response responses =
-      await dio.put('http://127.0.0.1:8000/$id', data: formData);
+  Response responses = await dio.put('$apiURL/$id', data: formData);
 
   return responses;
 }
 
 Future<Dokumen> deleteDokumen(String? id) async {
-  String url = "http://127.0.0.1:8000/$id";
+  String url = "$apiURL/$id";
   var responses = await http.delete(Uri.parse(url));
   var jsonObject = jsonDecode(responses.body);
   if (responses.statusCode == 201) {
@@ -62,7 +73,7 @@ Future<Dokumen> deleteDokumen(String? id) async {
 }
 
 Future<List<Doklist>> readDoklist() async {
-  String url = "http://127.0.0.1:8000/";
+  String url = "$apiURL/";
   var response = await http.get(Uri.parse(url));
   var jsonObject = jsonDecode(response.body);
   List<Doklist> isi = [];

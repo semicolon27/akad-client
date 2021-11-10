@@ -3,10 +3,12 @@ import 'dart:typed_data';
 
 import 'package:akad/controller/c_Dokumen.dart';
 import 'package:akad/controller/c_JenisDokumen.dart';
+import 'package:akad/core_utilitas/dialog.dart';
 import 'package:akad/models/dokumen.dart';
 import 'package:akad/models/jenisDokumen.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
 class DokumenVM extends BaseViewModel {
@@ -56,14 +58,33 @@ class DokumenVM extends BaseViewModel {
   // end manipulasi data
 
   // function Controller
-  Future<String> toUpdate(String idDokumen, int idJenis, String noreg, var file,
-      String namaFile, String keterangan) async {
+  Future<void> toUpdate(
+    String idDokumen,
+    int idJenis,
+    String noreg,
+    var file,
+    String namaFile,
+    String keterangan,
+  ) async {
     var response = await updateDokumen(
-        idDokumen, idJenis, noreg, file, namaFile, keterangan);
-    if (response.statusCode == 201) {
-      Dokumen hasil = Dokumen.fromJson(jsonDecode(response.data));
-      return "Berhasil update dokumen dengan nomor registrasi ${hasil.dokumen.noreg}";
+      idDokumen,
+      idJenis,
+      noreg,
+      file,
+      namaFile,
+      keterangan,
+    );
+    if (response.statusCode == 200 || response.statusCode == 200) {
+      await showNormalDialog(
+        subtitle: 'Berhasil edit dokumen',
+        textButton: 'Oke',
+      );
+      Get.toNamed(
+        '/home',
+        arguments: "Berhasil update dokumen dengan nomor registrasi $idDokumen",
+      );
     } else {
+      showNormalDialog(subtitle: 'Gagal edit dokumen', textButton: 'Kembali');
       throw Exception('Gagal update dokumen');
     }
   }
@@ -76,7 +97,7 @@ class DokumenVM extends BaseViewModel {
     _data = v;
     notifyListeners();
   }
- 
+
   void getDokumen(String id) async {
     setBusyForObject(_data, true);
     _data = await readDokumen(id);
